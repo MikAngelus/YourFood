@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">YourFood</string>
+    <string name="title_activity_bottom_navigation">bottomNavigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_lista">Prodotti</string>
+    <string name="title_spesa">Spese</string>
+    <string name="title_add">Aggiungi</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifiche</string>
+
+
+    <string-array name="pasto">
+        <item>Colazione</item>
+        <item>Merenda</item>
+        <item>Pranzo</item>
+        <item>Cena</item>
+    </string-array>
+
+    <string-array name="categoria">
+        <item>Pane</item>
+        <item>Carne</item>
+        <item>Pesce</item>
+        <item>Vegano</item>
+    </string-array>
+
+
+</resources>
