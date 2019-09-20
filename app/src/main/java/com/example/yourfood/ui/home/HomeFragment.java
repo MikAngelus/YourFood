@@ -37,7 +37,9 @@ public class HomeFragment extends Fragment {
         FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
         String strMNome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
-        nome_user.setText("Ciao " + strMNome);
+
+        if (strMNome!=null){
+        nome_user.setText("Ciao " + strMNome);}
 
 
 
