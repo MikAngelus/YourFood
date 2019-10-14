@@ -1,4 +1,4 @@
-package com.example.yourfood.ui.add;
+package com.example.yourfood.ui.edit;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -12,16 +12,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.yourfood.R;
+import com.example.yourfood.ui.lista.ListaFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,9 +37,13 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
-public class AddFragment extends Fragment {
+public class EditFragment extends Fragment {
 
-    private AddViewModel addViewModel;
+
+
+    public String posizione;
+
+    private EditFragmentModel editFragmentModel;
     private DatePickerDialog.OnDateSetListener mDateSetListenerAcquisto, mDateSetListenerScadenza;
 
 
@@ -53,17 +56,61 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        addViewModel = ViewModelProviders.of(this).get(AddViewModel.class);
-
-        View root = inflater.inflate(R.layout.fragment_add, container, false);
+        editFragmentModel = ViewModelProviders.of(this).get(EditFragmentModel.class);
+        View root = inflater.inflate(R.layout.fragment_edit, container, false);
 
         final EditText nome_prodotto = root.findViewById(R.id.editTextNomeProdotto);
         final EditText data_acquisto = root.findViewById(R.id.editTextAcquisto);
         final EditText data_scadenza = root.findViewById(R.id.editTextScadenza);
-        final Spinner pasto = root.findViewById(R.id.spinnerPasto);
+        final Spinner pasto= root.findViewById(R.id.spinnerPasto);
         final Spinner categoria = root.findViewById(R.id.spinnerCategoria);
         final EditText num_quantita = root.findViewById(R.id.editTextQuantita);
         final EditText costo = root.findViewById(R.id.editTextCosto);
+
+        final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+        final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+        final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+posizione);
+
+        Toast.makeText(getActivity(), posizione, Toast.LENGTH_LONG).show();
+
+
+        ValueEventListener messageListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        String nome = dataSnapshot.child("Nome").getValue().toString();
+                        String scadenza = dataSnapshot.child("Data_scadenza").getValue().toString();
+                        String acquisto = dataSnapshot.child("Data_acquisto").getValue().toString();
+                        String costo1 = dataSnapshot.child("Costo").getValue().toString();
+                        String pasto1 = dataSnapshot.child("Pasto").getValue().toString();
+                        String categoria1 = dataSnapshot.child("Categoria").getValue().toString();
+                        String quantita = dataSnapshot.child("Quantita").getValue().toString();
+
+                        nome_prodotto.setText(nome);
+                        data_scadenza.setText(scadenza);
+                        data_acquisto.setText(acquisto);
+                        num_quantita.setText(quantita);
+                        costo.setText(costo1);
+                        int idPasto= Integer.parseInt(pasto1);
+                        pasto.setSelection(idPasto);
+                        int idCategoria= Integer.parseInt(categoria1);
+                        categoria.setSelection(idCategoria);
+
+
+            }
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+
+            }
+
+        }
+
+                ;DBRef.addListenerForSingleValueEvent(messageListener);
+
+
 
         Calendar c = Calendar.getInstance();
         final int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -86,12 +133,12 @@ public class AddFragment extends Fragment {
         mDateSetListenerAcquisto = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int mDay, int mMonth, int mYear) {
-               // data_acquisto.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
+                // data_acquisto.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
                 String day="" + mYear;
                 String month="" + (mMonth+1);
                 String year="" +mDay;
 
-               if(mYear>0 && mYear<10){
+                if(mYear>0 && mYear<10){
                     day= "0"+day;
                 }
 
@@ -218,7 +265,7 @@ public class AddFragment extends Fragment {
                         }
 
                         System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-                      } catch (ParseException e) {
+                    } catch (ParseException e) {
 
                         data_scadenza.setText(null);
                         Toast.makeText(getActivity(), "Inserire una data scadenza valida: dd/mm/yy", Toast.LENGTH_SHORT).show();
@@ -230,24 +277,23 @@ public class AddFragment extends Fragment {
         });
 
 
-        final Button reset=root.findViewById(R.id.resetField);
+        final Button reset=root.findViewById(R.id.delete);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                resetCampi();
+                final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+                final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+                final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+ posizione);
+                DBRef.removeValue();
+
+                Fragment someFragment = new ListaFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
 
             }
-
-            private void resetCampi() {
-
-                nome_prodotto.setText(null);
-                data_acquisto.setText(null);
-                data_scadenza.setText(null);
-                num_quantita.setText(null);
-                costo.setText(null);
-            }
-
         });
 
         Button salva=root.findViewById(R.id.save);
@@ -314,10 +360,8 @@ public class AddFragment extends Fragment {
                         ValueEventListener messageListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String index = dataSnapshot.child("index").getValue().toString();
 
-                                String parentName = "Prodotto_" + index;
-                                DatabaseReference DBRef2 = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/" + parentName);
+                                DatabaseReference DBRef2 = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/" + posizione);
                                 DBRef2.child("Nome").setValue(nomeProdotto);
                                 DBRef2.child("Data_scadenza").setValue(dataScadenza);
                                 DBRef2.child("Data_acquisto").setValue(dataAcquisto);
@@ -325,9 +369,6 @@ public class AddFragment extends Fragment {
                                 DBRef2.child("Categoria").setValue(dataCategoria);
                                 DBRef2.child("Quantita").setValue(dataQuantita);
                                 DBRef2.child("Costo").setValue(dataCosto);
-                                Integer intIndex = parseInt(index);
-                                intIndex++;
-                                DBRef.child("index").setValue(intIndex.toString());
                             }
 
                             @Override
@@ -339,7 +380,7 @@ public class AddFragment extends Fragment {
 
                         // resetCampi();
 
-                        Toast.makeText(getActivity(), "Prodotto aggiunto alla lista!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Prodotto modificato correttamente", Toast.LENGTH_SHORT).show();
                     } else {
 
                         Toast.makeText(getActivity(), "Inserisci una quantità o costo valida!", Toast.LENGTH_SHORT).show();
@@ -352,19 +393,6 @@ public class AddFragment extends Fragment {
                 }
             }
         });
-
-
-        final TextView textView = root.findViewById(R.id.text_add);
-        addViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-            
-            
-        });
-
-
 
         return root;
 
