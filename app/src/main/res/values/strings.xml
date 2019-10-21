@@ -23,5 +23,11 @@
         <item>Vegano</item>
     </string-array>
 
+    <string-array name="tipo_prodotto">
+        <item>Da consumare</item>
+        <item>Consumati</item>
+        <item>Scaduti</item>
+    </string-array>
+
 
 </resources>

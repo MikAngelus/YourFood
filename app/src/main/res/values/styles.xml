@@ -12,5 +12,24 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="theme1.AppTheme" parent="Theme.MaterialComponents">
+
+    </style>
+    <style name="theme3.AppTheme." parent="Theme.MaterialComponents.NoActionBar">
+
+    </style>
+    <style name="theme2.AppTheme" parent="Theme.MaterialComponents.Light">
+
+    </style>
+    <style name="theme4.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+    </style>
+    <style name="theme5.AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+
+    </style>
+
+
+
+
 
 </resources>

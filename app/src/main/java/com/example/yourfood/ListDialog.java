@@ -23,7 +23,7 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
     public String data_acquisto;
     public String costo;
     public String categoria;
-
+    public String consumato;
     //Todo: Mostrare il valore esatto dello spinner categoria e pasto
 
     public String pasto;
@@ -34,6 +34,7 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         builder.setTitle(nome_prodotto);
         builder.setMessage("Scadenza: " + data_scadenza +
                 "\nAcquisto: " + data_acquisto +
@@ -42,12 +43,26 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
                 "\nCategoria: " + categoria +
                 "\nPasto: " + pasto +
                 "\n\nE' consigliabile non farlo scadere!\n");
-        builder.setPositiveButton("Consumato", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
+        int consumo=Integer.parseInt(consumato);
+        if (consumo==0) {
+
+            builder.setPositiveButton("Consumato", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    setConsumato();
+
+                    Toast.makeText(getActivity(), "Prodotto consumato", Toast.LENGTH_LONG).show();
+                    Fragment someFragment = new ListaFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
+                    transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                    transaction.commit();
+                }
+            });
+
+        }
         builder.setNeutralButton("Elimina", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -55,19 +70,17 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
                delete();
                Toast.makeText(getActivity(), "This is a delete button", Toast.LENGTH_LONG).show();
 
-                Fragment someFragment = new ListaFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
+               Fragment someFragment = new ListaFragment();
+               FragmentTransaction transaction = getFragmentManager().beginTransaction();
+               transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+               transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+               transaction.commit();
+
             }
         });
         builder.setNegativeButton("Modifica", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
 
                 Fragment someFragment = new EditFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -81,6 +94,15 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
 
 
         return builder.create();
+
+    }
+
+    private void setConsumato() {
+
+        final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+        final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+        final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+ posizione);
+        DBRef.child("Consumato").setValue("1");
 
     }
 

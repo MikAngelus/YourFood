@@ -6,13 +6,18 @@
     android:layout_height="match_parent">
 
     <ListView
-        android:id="@+id/lista_prodotti"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline22"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"></ListView>
+        android:id="@+id/daconsumare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customshape"
+        android:divider="#FFFFFF"
+        android:dividerHeight="4px"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline26"
+        app:layout_constraintTop_toTopOf="@+id/guideline34">
+
+    </ListView>
 
     <TextView
         android:id="@+id/textViewProva"
@@ -21,31 +26,155 @@
         android:text=""
         tools:ignore="MissingConstraints" />
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
         android:text="Consulta i tuoi prodotti"
         android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline23"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <Spinner
+        android:id="@+id/tipo_prodotto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:entries="@array/tipo_prodotto"
+        app:layout_constraintBottom_toTopOf="@+id/guideline23"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintStart_toStartOf="@+id/guideline26"
+        app:layout_constraintTop_toTopOf="@+id/guideline33" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_colazione"
+        style="@style/Theme.MaterialComponents.Light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:text="Colazione"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/bg_chip_state_list"
+        app:layout_constraintBottom_toTopOf="@+id/guideline34"
+        app:layout_constraintEnd_toStartOf="@+id/guideline35"
+        app:layout_constraintStart_toStartOf="@+id/guideline26"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_merenda"
+        style="@style/Theme.MaterialComponents.Light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:text="Merenda"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/bg_chip_state_list"
+        app:layout_constraintBottom_toTopOf="@+id/guideline34"
+        app:layout_constraintEnd_toStartOf="@+id/guideline36"
+        app:layout_constraintStart_toStartOf="@+id/guideline35"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_pranzo"
+        style="@style/Theme.MaterialComponents.Light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:text="Pranzo"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/bg_chip_state_list"
+        app:layout_constraintBottom_toTopOf="@+id/guideline34"
+        app:layout_constraintEnd_toStartOf="@+id/guideline37"
+        app:layout_constraintStart_toStartOf="@+id/guideline36"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_cena"
+        style="@style/Theme.MaterialComponents.Light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:text="Cena"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/bg_chip_state_list"
+        app:layout_constraintBottom_toTopOf="@+id/guideline34"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintStart_toStartOf="@+id/guideline37"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

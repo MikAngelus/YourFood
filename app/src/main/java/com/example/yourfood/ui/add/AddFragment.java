@@ -324,6 +324,8 @@ public class AddFragment extends Fragment {
                                 DBRef2.child("Pasto").setValue(dataPasto);
                                 DBRef2.child("Categoria").setValue(dataCategoria);
                                 DBRef2.child("Quantita").setValue(dataQuantita);
+                                DBRef2.child("Consumato").setValue("0");
+                                DBRef2.child("Scaduto").setValue("0");
                                 DBRef2.child("Costo").setValue(dataCosto);
                                 Integer intIndex = parseInt(index);
                                 intIndex++;

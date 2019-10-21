@@ -1,18 +1,13 @@
 package com.example.yourfood;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,10 +27,14 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         final Object[] obj = new Object[1];
+
+
         FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+
         final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
         final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID);
         //mAuth.removeAuthStateListener(mAuthListener);
+
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };DBRef.addListenerForSingleValueEvent(eventListener);
-
-
 
 
         Intent inteLCambioActiviy = new Intent(MainActivity.this, bottomNavigation.class);
