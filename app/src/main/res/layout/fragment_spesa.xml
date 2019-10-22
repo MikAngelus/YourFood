@@ -185,7 +185,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.72" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline30"
@@ -474,7 +474,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline41" />
 
     <TextView
-        android:id="@+id/spesa_media"
+        android:id="@+id/rapporto_totale_mese"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -490,7 +490,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="In media al mese spendi"
+        android:text="Rapporto spesa totale / mese"
         android:textAlignment="viewStart"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline43"
@@ -520,6 +520,7 @@
         android:id="@+id/lista_categoria"
         android:layout_width="0dp"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintEnd_toStartOf="@+id/guideline48"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
@@ -529,6 +530,8 @@
         android:id="@+id/lista_spese_categoria"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="none"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
         app:layout_constraintStart_toStartOf="@+id/guideline48"

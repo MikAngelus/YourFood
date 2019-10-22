@@ -17,10 +17,10 @@
     </string-array>
 
     <string-array name="categoria">
-        <item>Pane</item>
+        <item>Pane/Pasta</item>
         <item>Carne</item>
         <item>Pesce</item>
-        <item>Vegano</item>
+        <item>Vegano/BIO</item>
     </string-array>
 
     <string-array name="tipo_prodotto">

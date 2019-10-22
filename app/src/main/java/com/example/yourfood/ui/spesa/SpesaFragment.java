@@ -23,36 +23,36 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.parseInt;
 
 public class SpesaFragment extends Fragment {
 
     private SpesaViewModel spesaViewModel;
+    final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+    final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+    final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/");
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         spesaViewModel =
                 ViewModelProviders.of(this).get(SpesaViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_spesa, container, false);
+        final View root = inflater.inflate(R.layout.fragment_spesa, container, false);
 
 
-        final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
-        final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
-        final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/");
 
         final TextView totale =root.findViewById(R.id.spesa_totale);
-
+        final TextView spesa_mensile =root.findViewById(R.id.spesa_mese);
         final HorizontalScrollView scroll = root.findViewById(R.id.scroll_chip);
-
-
-
         final Chip[] chips = new Chip[12];
         chips[0]= root.findViewById(R.id.chip_gennaio);
         chips[1]=root.findViewById(R.id.chip_febbraio);
@@ -66,6 +66,13 @@ public class SpesaFragment extends Fragment {
         chips[9]=root.findViewById(R.id.chip_ottobre);
         chips[10]=root.findViewById(R.id.chip_novembre);
         chips[11]=root.findViewById(R.id.chip_dicembre);
+
+
+
+
+
+        // String[] mess = getResources().getStringArray(R.string.);
+
 
         final int[] scelta_mese = new int[1];
 
@@ -82,9 +89,10 @@ public class SpesaFragment extends Fragment {
         chips[mese].setChecked(true);
         chips[mese].setTextColor(Color.WHITE);
 
-        final String[] mese_selezionato = {"01/" + (mese + 1) + "/" + year + ""};
+        final String[] mese_selezionato = {"31/" + (mese + 1) + "/" + year + ""};
         System.out.println(mese_selezionato[0]);
 
+        final boolean[] clear = {false};
 
 
         int i=0;
@@ -93,11 +101,12 @@ public class SpesaFragment extends Fragment {
 
             final int finalI = i;
 
-
             chips[i].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                clear[0] =true;
+                //
                 chips[scelta_mese[0]].setChecked(false);
                 //chips[scelta_mese[0]].setTextColor(Color.DKGRAY);
 
@@ -107,16 +116,19 @@ public class SpesaFragment extends Fragment {
 
                     if(scelta_mese[0]<9){
 
-                        mese_selezionato[0] ="01/0"+(scelta_mese[0]+1)+"/"+year+"";
+
+                        mese_selezionato[0] ="31/0"+(scelta_mese[0]+1)+"/"+year+"";
                         System.out.println(mese_selezionato[0]);
 
                     }
 
                     else{
-                        mese_selezionato[0] ="01/"+(scelta_mese[0]+1)+"/"+year+"";
+                        mese_selezionato[0] ="31/"+(scelta_mese[0]+1)+"/"+year+"";
                         System.out.println(mese_selezionato[0]);
 
                     }
+
+                    readDB(mese_selezionato[0], scelta_mese[0], year, root, totale, spesa_mensile, chips);
 
 
                }
@@ -130,17 +142,26 @@ public class SpesaFragment extends Fragment {
             //chips[i].setEnabled(false);
         }
 
+        readDB(mese_selezionato[0], scelta_mese[0], year, root, totale, spesa_mensile, chips);
+
+
+        return root;
+    }
+
+
+
+    public void readDB(final String mese_selezionato, final int scelta_mese, final int year, View root, final TextView totale, final TextView spesa_mensile, final Chip[] chips) {
 
         final ArrayList<String> CategoriaArrayList = new ArrayList<>();
         final ListView lista_categoria;
         lista_categoria = (ListView) root.findViewById(R.id.lista_categoria);
         final ArrayAdapter<String> myArrayAdapterCategoria = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, CategoriaArrayList);
 
-       // String[] mess = getResources().getStringArray(R.string.);
-        CategoriaArrayList.add("Pane");
+        // String[] mess = getResources().getStringArray(R.string.);
+        CategoriaArrayList.add("Pane/Pasta");
         CategoriaArrayList.add("Carne");
         CategoriaArrayList.add("Pesce");
-        CategoriaArrayList.add("Vegano");
+        CategoriaArrayList.add("Vegano/Bio");
         lista_categoria.setAdapter(myArrayAdapterCategoria);
 
 
@@ -149,14 +170,12 @@ public class SpesaFragment extends Fragment {
         spese_categoria = (ListView) root.findViewById(R.id.lista_spese_categoria);
         final ArrayAdapter<String> myArrayAdapterSpeseCategoria = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, SpesaCategoriaArrayList);
 
-        // String[] mess = getResources().getStringArray(R.string.);
+        final TextView rapporto = root.findViewById(R.id.rapporto_totale_mese);
 
 
 
 
-
-
-        ValueEventListener messageListener = new ValueEventListener() {
+        final ValueEventListener messageListener = new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -178,9 +197,22 @@ public class SpesaFragment extends Fragment {
 
                 float parziale = 0;
 
+
                 float[] id_categoria = new float[5];
 
+                for(int p=0; p<5; p++){
+
+                    id_categoria[p]=0;
+
+                }
+
+                int count_presence=0;
+                int h=-1;
+
                 for (int i = 0; i < intIndex; i++) {
+
+                    boolean flag=false;
+
 
                     //String count= i.toString();
                     final String count = Integer.toString(i);
@@ -202,60 +234,91 @@ public class SpesaFragment extends Fragment {
                         String categoria = dataSnapshot.child(nodo).child("Categoria").getValue().toString();
                         String quantita = dataSnapshot.child(nodo).child("Quantita").getValue().toString();
 
+
+                        int read_categoria=Integer.parseInt(categoria);
                         float x = Float.parseFloat(costo);
                         float z = Float.parseFloat(quantita);
 
-                        boolean flag=false;
+
+                        parziale = parziale + (x * z);
+                        //System.out.println(parziale);
 
                         SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
                         //String inputString1 = acquisto.getText().toString();
                         //String inputString2 = mese_selezionato[0];
 
+
+
                         try {
 
                             Date date1 = myFormat.parse(acquisto);
-                            Date date2 = myFormat.parse(mese_selezionato[0]);
+                            Date date2 = myFormat.parse(mese_selezionato);
+                            String mese_precedente ="31/"+(scelta_mese)+"/"+year+"";
+                            Date date3 = myFormat.parse(mese_precedente);
                             long diff = date2.getTime() - date1.getTime();
 
-                            if (diff > 0) {
+                            //System.out.println(date1+" "+date2+" "+date3);
 
-                               flag=true;
+                            if (date2.getTime() > date1.getTime() && date1.getTime() > date3.getTime()) {
 
+                                flag=true;
 
                             }
 
-                            System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                            //System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
                         } catch (ParseException e) {
-                            flag=false;
+                            // flag=false;
                             e.printStackTrace();
                         }
 
-                        parziale = parziale + (x * z);
+                        System.out.println(h);
 
                         if(flag) {
 
-                            int read_categoria = Integer.parseInt(categoria);
-
-                            for (int p = 0; p < id_categoria.length; p++) {
-
-                                if (read_categoria == p) {
-
-                                    id_categoria[p] = id_categoria[p] + (x * z);
-
-                                    if(id_categoria[p]==0){
-
-                                        SpesaCategoriaArrayList.add("0.0€");
-
-                                    }
-
-                                    else {
-
-                                        SpesaCategoriaArrayList.add(id_categoria[p] + "€");
-                                    }
-                                }
-                            }
+                            h++;
+                            id_categoria[read_categoria] = id_categoria[read_categoria] + (x * z);
+                            //SpesaCategoriaArrayList.add(id_categoria[read_categoria] + "€");
+                            //spese_categoria.setAdapter(myArrayAdapterSpeseCategoria);
 
                         }
+
+                        else {
+
+                        }
+
+
+
+
+                        if(h<0){
+
+                            count_presence++;
+
+
+                           // SpesaCategoriaArrayList.add("N/D");
+
+                        }
+
+                        if (count_presence>3){
+
+                            System.out.println("nessun prodotto questo mese");
+                            //spese_categoria.setVisibility(View.GONE);
+                           // lista_categoria.setVisibility(View.GONE);
+                            SpesaCategoriaArrayList.clear();
+                           /* SpesaCategoriaArrayList.add("N/D");
+                            SpesaCategoriaArrayList.add("N/D");
+                            SpesaCategoriaArrayList.add("N/D");
+                            SpesaCategoriaArrayList.add("N/D");*/
+                            spese_categoria.setAdapter(myArrayAdapterSpeseCategoria);
+
+                        }
+                        else {
+
+                            spese_categoria.setVisibility(View.VISIBLE);
+                            lista_categoria.setVisibility(View.VISIBLE);
+
+
+                        }
+
 
 
 
@@ -293,15 +356,55 @@ public class SpesaFragment extends Fragment {
 
                     }
 
+
+
+
                 }
 
 
-                totale.setText(String.valueOf(parziale) + "€");
-
-                spese_categoria.setAdapter(myArrayAdapterSpeseCategoria);
 
 
 
+                float parziale_mensile=0;
+                for(int p=0; p<4; p++){
+
+
+
+                    if(id_categoria[p]==0){
+
+                        SpesaCategoriaArrayList.add(id_categoria[p] + "€");
+                        spese_categoria.setAdapter(myArrayAdapterSpeseCategoria);
+
+
+
+                    }
+
+                    else {
+
+                        SpesaCategoriaArrayList.add(id_categoria[p] + "€");
+
+                    }
+
+                    NumberFormat formatter = NumberFormat.getNumberInstance();
+                    formatter.setMinimumFractionDigits(2);
+                    formatter.setMaximumFractionDigits(2);
+                    String output = formatter.format(parziale);
+                    totale.setText(output + "€");
+
+
+                    parziale_mensile+=id_categoria[p];
+                    formatter.setMinimumFractionDigits(2);
+                    formatter.setMaximumFractionDigits(2);
+                    output = formatter.format(parziale_mensile);
+                    spesa_mensile.setText(""+output+"€");
+
+                    float div=(parziale_mensile /parziale) *100;
+                    formatter.setMinimumFractionDigits(2);
+                    formatter.setMaximumFractionDigits(2);
+                    output = formatter.format(div);
+                    rapporto.setText(output+"%");
+
+                }
 
             }
 
@@ -321,15 +424,7 @@ public class SpesaFragment extends Fragment {
 
 
 
-
-
-        /*
-        spesaViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-        return root;
     }
+
+
 }

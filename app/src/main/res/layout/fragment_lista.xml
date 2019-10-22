@@ -112,69 +112,73 @@
         app:layout_constraintStart_toStartOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/guideline33" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_colazione"
-        style="@style/Theme.MaterialComponents.Light"
+    <HorizontalScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:text="Colazione"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:chipBackgroundColor="@color/bg_chip_state_list"
-        app:layout_constraintBottom_toTopOf="@+id/guideline34"
-        app:layout_constraintEnd_toStartOf="@+id/guideline35"
-        app:layout_constraintStart_toStartOf="@+id/guideline26"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
-        tools:ignore="MissingConstraints" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_merenda"
-        style="@style/Theme.MaterialComponents.Light"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:text="Merenda"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:chipBackgroundColor="@color/bg_chip_state_list"
-        app:layout_constraintBottom_toTopOf="@+id/guideline34"
-        app:layout_constraintEnd_toStartOf="@+id/guideline36"
-        app:layout_constraintStart_toStartOf="@+id/guideline35"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
-        tools:ignore="MissingConstraints" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_pranzo"
-        style="@style/Theme.MaterialComponents.Light"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:text="Pranzo"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:chipBackgroundColor="@color/bg_chip_state_list"
-        app:layout_constraintBottom_toTopOf="@+id/guideline34"
-        app:layout_constraintEnd_toStartOf="@+id/guideline37"
-        app:layout_constraintStart_toStartOf="@+id/guideline36"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
-        tools:ignore="MissingConstraints" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_cena"
-        style="@style/Theme.MaterialComponents.Light"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:text="Cena"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:chipBackgroundColor="@color/bg_chip_state_list"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline34"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
-        app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="@+id/guideline26"
+        app:layout_constraintTop_toTopOf="@+id/guideline23">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_colazione"
+                style="@style/Theme.MaterialComponents.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Colazione"
+                android:layout_marginHorizontal="7dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_merenda"
+                style="@style/Theme.MaterialComponents.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Merenda"
+                android:layout_marginHorizontal="7dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_pranzo"
+                style="@style/Theme.MaterialComponents.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Pranzo"
+                android:layout_marginHorizontal="7dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_cena"
+                style="@style/Theme.MaterialComponents.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Cena"
+                android:layout_marginHorizontal="7dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
