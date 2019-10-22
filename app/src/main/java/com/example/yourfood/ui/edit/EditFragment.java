@@ -391,7 +391,16 @@ public class EditFragment extends Fragment {
                     Toast.makeText(getActivity(), "Dati mancanti", Toast.LENGTH_SHORT).show();
 
                 }
+
+
+                Fragment someFragment = new ListaFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
+
+
         });
 
         return root;

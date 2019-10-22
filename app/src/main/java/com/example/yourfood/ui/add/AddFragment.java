@@ -8,17 +8,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.yourfood.R;
@@ -57,6 +56,8 @@ public class AddFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_add, container, false);
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         final EditText nome_prodotto = root.findViewById(R.id.editTextNomeProdotto);
         final EditText data_acquisto = root.findViewById(R.id.editTextAcquisto);
         final EditText data_scadenza = root.findViewById(R.id.editTextScadenza);
@@ -70,7 +71,7 @@ public class AddFragment extends Fragment {
         final int mMonth = c.get(Calendar.MONTH);
         final int mYear = c.get(Calendar.YEAR);
 
-        final Button btnDataAccquisto = root.findViewById(R.id.btnDataAcquisto);
+        final ImageButton btnDataAccquisto = root.findViewById(R.id.btnDataAcquisto);
         btnDataAccquisto.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -128,7 +129,7 @@ public class AddFragment extends Fragment {
             }
         });
 
-        final Button btnDataScadenza = root.findViewById(R.id.btnDataScadenza);
+        final ImageButton btnDataScadenza = root.findViewById(R.id.btnDataScadenza);
         btnDataScadenza.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -356,19 +357,7 @@ public class AddFragment extends Fragment {
         });
 
 
-        final TextView textView = root.findViewById(R.id.text_add);
-        addViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-            
-            
-        });
-
-
-
-        return root;
+          return root;
 
     }
 
