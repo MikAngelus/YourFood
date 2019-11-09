@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -117,7 +118,7 @@ public class EditFragment extends Fragment {
         final int mMonth = c.get(Calendar.MONTH);
         final int mYear = c.get(Calendar.YEAR);
 
-        final Button btnDataAccquisto = root.findViewById(R.id.btnDataAcquisto);
+        final ImageButton btnDataAccquisto = root.findViewById(R.id.btnDataAcquisto);
         btnDataAccquisto.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -175,7 +176,7 @@ public class EditFragment extends Fragment {
             }
         });
 
-        final Button btnDataScadenza = root.findViewById(R.id.btnDataScadenza);
+        final ImageButton btnDataScadenza = root.findViewById(R.id.btnDataScadenza);
         btnDataScadenza.setOnClickListener(new View.OnClickListener() {
 
             @Override

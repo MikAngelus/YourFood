@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
@@ -156,7 +158,7 @@ public class Login extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             mAuth.removeAuthStateListener(mAuthListener);
                             FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
-                            String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+                            final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
                             final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID);
 
                             ValueEventListener eventListener = new ValueEventListener() {
@@ -164,6 +166,9 @@ public class Login extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Object obj = dataSnapshot.child("Prodotti").child("index").getValue();
                                     if(obj == null){
+                                        DBRef.child("Notifiche").child("Attivo").setValue(0);
+                                        DBRef.child("Notifiche").child("Orario").setValue("13:00");
+                                        DBRef.child("Notifiche").child("Day_before").setValue("3");
                                         DBRef.child("Prodotti").child("index").setValue(0);
                                         String strMNome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                                         String strMemail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -171,6 +176,7 @@ public class Login extends AppCompatActivity {
                                         DBRef.child("Nome").setValue(strMNome);
                                         DBRef.child("Email").setValue(strMemail);
                                         DBRef.child("Telefono").setValue(strMnumero);
+                                        //DBRef.child(strMCodiceUID).setValue(0);
                                     }
                                 }
 
@@ -190,6 +196,26 @@ public class Login extends AppCompatActivity {
                         // ...
                     }
                 });
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, msg);
+                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
 
     }

@@ -36,15 +36,6 @@
        app:layout_constraintTop_toTopOf="@+id/guideline50"
        app:layout_constraintVertical_bias="0.0" />
 
-   <ImageButton
-       android:id="@+id/btnDataScadenza"
-       android:layout_width="45dp"
-       android:layout_height="45dp"
-       android:layout_marginStart="8dp"
-       app:layout_constraintStart_toStartOf="@+id/guideline24"
-       app:layout_constraintTop_toTopOf="@+id/guideline39"
-       app:srcCompat="@mipmap/ic_launcher_foreground" />
-
    <View
        android:id="@+id/view5"
        android:layout_width="0dp"
@@ -363,12 +354,21 @@
        app:layout_constraintTop_toTopOf="@+id/guideline51" />
 
    <ImageButton
+       android:id="@+id/btnDataScadenza"
+       android:layout_width="45dp"
+       android:layout_height="45dp"
+       android:layout_marginStart="8dp"
+       app:layout_constraintStart_toStartOf="@+id/guideline24"
+       app:layout_constraintTop_toTopOf="@+id/guideline39"
+       app:srcCompat="@drawable/ic_calendar" />
+
+   <ImageButton
        android:id="@+id/btnDataAcquisto"
        android:layout_width="45dp"
        android:layout_height="45dp"
        android:layout_marginStart="8dp"
        app:layout_constraintStart_toStartOf="@+id/guideline24"
        app:layout_constraintTop_toTopOf="@+id/guideline16"
-       app:srcCompat="@mipmap/ic_launcher_foreground" />
+       app:srcCompat="@drawable/ic_calendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

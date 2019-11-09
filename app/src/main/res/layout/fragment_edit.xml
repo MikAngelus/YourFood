@@ -347,20 +347,22 @@
         app:layout_constraintStart_toEndOf="@+id/editTextCosto"
         app:layout_constraintTop_toTopOf="@+id/guideline51" />
 
-    <Button
-        android:id="@+id/btnDataAcquisto"
-        android:layout_width="37dp"
-        android:layout_height="46dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline13"
-        app:layout_constraintStart_toStartOf="@+id/guideline15"
-        app:layout_constraintTop_toTopOf="@+id/guideline16" />
-
-    <Button
+    <ImageButton
         android:id="@+id/btnDataScadenza"
-        android:layout_width="37dp"
-        android:layout_height="46dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline13"
-        app:layout_constraintStart_toStartOf="@+id/guideline15"
-        app:layout_constraintTop_toTopOf="@+id/guideline39" />
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline24"
+        app:layout_constraintTop_toTopOf="@+id/guideline39"
+        app:srcCompat="@drawable/ic_calendar" />
+
+    <ImageButton
+        android:id="@+id/btnDataAcquisto"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline24"
+        app:layout_constraintTop_toTopOf="@+id/guideline16"
+        app:srcCompat="@drawable/ic_calendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

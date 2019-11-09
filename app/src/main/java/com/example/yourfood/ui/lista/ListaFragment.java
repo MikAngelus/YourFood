@@ -253,10 +253,6 @@ public class ListaFragment extends Fragment {
 
         }
 
-    private void controlloChip() {
-
-
-    }
 
 
     private void setLista(final int[] scelta_pasto, final Spinner tipo, final ArrayList<String> myArrayList, final ArrayAdapter<String> myArrayAdapter, final ListView myListView){
@@ -283,6 +279,8 @@ public class ListaFragment extends Fragment {
                         int real_index=0;
                         int y = 0;
 
+                        int consumo = 0;
+
                         for (int i = 0; i < intIndex; i++) {
 
                             //String count= i.toString();
@@ -307,7 +305,7 @@ public class ListaFragment extends Fragment {
                                 String consumato = dataSnapshot.child(nodo).child("Consumato").getValue().toString();
                                 String scaduto = dataSnapshot.child(nodo).child("Scaduto").getValue().toString();
 
-                                int consumo = parseInt(consumato);
+                                consumo = parseInt(consumato);
                                 int scadere = parseInt(scaduto);
                                 int var_pasto=parseInt(pasto);
 
@@ -315,7 +313,7 @@ public class ListaFragment extends Fragment {
 
                                     //Toast.makeText(getActivity(), "check pasto" ,Toast.LENGTH_SHORT).show();
 
-                                    if (scadere == 1 && tipo.getSelectedItemId() == 2) {
+                                    if (scadere == 1 && consumo < 1 && tipo.getSelectedItemId() == 2) {
 
                                         myArrayList.add(nome);
                                         myListView.setAdapter(myArrayAdapter);
@@ -331,7 +329,7 @@ public class ListaFragment extends Fragment {
                                         lista_consumato[y] = consumato;
                                         y++;
 
-                                        myListView.setBackgroundResource(R.drawable.list_scaduti);
+                                        myListView.setBackgroundResource(R.drawable.list_dacosumare);
 
                                     }
 
@@ -351,7 +349,7 @@ public class ListaFragment extends Fragment {
                                         lista_consumato[y] = consumato;
                                         y++;
 
-                                        myListView.setBackgroundResource(R.drawable.customshape);
+                                        myListView.setBackgroundResource(R.drawable.list_dacosumare);
 
                                     }
 
@@ -371,7 +369,7 @@ public class ListaFragment extends Fragment {
                                         lista_consumato[y] = consumato;
                                         y++;
 
-                                        myListView.setBackgroundResource(R.drawable.list_consumati);
+                                        myListView.setBackgroundResource(R.drawable.list_dacosumare);
 
 
                                     }
@@ -407,7 +405,7 @@ public class ListaFragment extends Fragment {
                         }
 
                         else if(myArrayList.size() >0){
-                            controllo_scadenza(lista_dataScadenza, lista_nodo, real_index);
+                            controllo_scadenza(lista_dataScadenza, lista_nodo, real_index, lista_consumato);
                             //Toast.makeText(getActivity(), "lista piena", Toast.LENGTH_SHORT).show();
                             myListView.setVisibility(View.VISIBLE);
 
@@ -433,7 +431,7 @@ public class ListaFragment extends Fragment {
 
 
         }
-    private void controllo_scadenza(String[] lista_dataScadenza, String[] lista_nodo, Integer real_index) {
+    private void controllo_scadenza(String[] lista_dataScadenza, String[] lista_nodo, Integer real_index, String[] cons) {
 
         String[] scadenze=lista_dataScadenza;
         final String[] nodi=lista_nodo;
@@ -447,7 +445,9 @@ public class ListaFragment extends Fragment {
            String scad = lista_dataScadenza[i];
            System.out.println(scad);
 
+
            if(scad!=null) {
+               int consumato=parseInt(cons[i]);
 
                try {
 

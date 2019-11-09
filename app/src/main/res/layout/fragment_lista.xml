@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey">
 
-    <ListView
-        android:id="@+id/daconsumare"
+    <View
+        android:id="@+id/view7"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/customshape"
-        android:divider="#FFFFFF"
-        android:dividerHeight="4px"
-        app:layout_constraintEnd_toStartOf="@+id/guideline31"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline26"
-        app:layout_constraintTop_toTopOf="@+id/guideline34">
-
-    </ListView>
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/customcategoria"
+        app:layout_constraintBottom_toTopOf="@+id/guideline34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewProva"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline23"
@@ -112,10 +112,28 @@
         app:layout_constraintStart_toStartOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/guideline33" />
 
+    <ListView
+        android:id="@+id/daconsumare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/customshape"
+        android:divider="@color/colorGrey"
+        android:dividerHeight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline34">
+
+    </ListView>
+
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/guideline34"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline26"
@@ -131,9 +149,9 @@
                 style="@style/Theme.MaterialComponents.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:checkable="true"
                 android:text="Colazione"
-                android:layout_marginHorizontal="7dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="@color/bg_chip_state_list"
@@ -144,9 +162,9 @@
                 style="@style/Theme.MaterialComponents.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:checkable="true"
                 android:text="Merenda"
-                android:layout_marginHorizontal="7dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="@color/bg_chip_state_list"
@@ -157,9 +175,9 @@
                 style="@style/Theme.MaterialComponents.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:checkable="true"
                 android:text="Pranzo"
-                android:layout_marginHorizontal="7dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="@color/bg_chip_state_list"
@@ -170,15 +188,14 @@
                 style="@style/Theme.MaterialComponents.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:checkable="true"
                 android:text="Cena"
-                android:layout_marginHorizontal="7dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="@color/bg_chip_state_list"
                 tools:ignore="MissingConstraints" />
         </LinearLayout>
     </HorizontalScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

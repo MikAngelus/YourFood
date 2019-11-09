@@ -6,5 +6,11 @@
     <color name="colorDarkGrey">#616060</color>
     <color name="colorGrey">#E0DDDD</color>
     <color name="white">#FFFFFF</color>
+    
+    <!-- SWITCH COLOR
+
+    <color name="disable_forground_grey">#FF0000</color>
+    <color name="disable_thumb_grey">#FF7B7B</color>
+    <color name="enable_thumb_grey">#167900</color> -->
 
 </resources>
