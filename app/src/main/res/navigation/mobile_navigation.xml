@@ -5,11 +5,7 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.yourfood.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+
 
     <fragment
         android:id="@+id/navigation_edit"
@@ -28,6 +24,12 @@
         android:name="com.example.yourfood.ui.lista.ListaFragment"
         android:label="@string/title_lista"
         tools:layout="@layout/fragment_lista" />
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.yourfood.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_spesa"

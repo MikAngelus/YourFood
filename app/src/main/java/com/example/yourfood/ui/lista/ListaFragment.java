@@ -313,7 +313,7 @@ public class ListaFragment extends Fragment {
 
                                     //Toast.makeText(getActivity(), "check pasto" ,Toast.LENGTH_SHORT).show();
 
-                                    if (scadere == 1 && consumo < 1 && tipo.getSelectedItemId() == 2) {
+                                    if (scadere == 1 && tipo.getSelectedItemId() == 2) {
 
                                         myArrayList.add(nome);
                                         myListView.setAdapter(myArrayAdapter);
@@ -437,58 +437,66 @@ public class ListaFragment extends Fragment {
         final String[] nodi=lista_nodo;
         int index = real_index;
         int i=0;
+        String[] read_consumato=cons;
 
-        for(i=0; i<index; i++){
+
+
+        for(i=0; i<index; i++) {
 
             //String date1= lista_dataScadenza[i];
-           SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
-           String scad = lista_dataScadenza[i];
-           System.out.println(scad);
+            SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String scad = lista_dataScadenza[i];
+            System.out.println(scad);
 
 
-           if(scad!=null) {
-               int consumato=parseInt(cons[i]);
+            if (read_consumato[i] != null) {
 
-               try {
+                int read_cons = Integer.parseInt(read_consumato[i]);
 
-                   Date date1 = myFormat.parse(scad);
-                   Date date2 = myFormat.parse(currentDate);
-
-                   long diff = date1.getTime() - date2.getTime();
-                   //long diff=0;
-
-                   if (diff < 0) {
-
-                       //data_scadenza.setText(null);
-                       //Toast.makeText(getActivity(), "Seleziona una data scadenza maggiore della data di acquisto!", Toast.LENGTH_SHORT).show();
-                       System.out.println("scaduto");
+                if (scad != null && read_cons == 0) {
 
 
-                       final int finalI = i;
-                       ValueEventListener messageListener = new ValueEventListener() {
-                           @Override
-                           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+
+                        Date date1 = myFormat.parse(scad);
+                        Date date2 = myFormat.parse(currentDate);
+
+                        long diff = date1.getTime() - date2.getTime();
+                        //long diff=0;
+
+                        if (diff < 0) {
+
+                            //data_scadenza.setText(null);
+                            //Toast.makeText(getActivity(), "Seleziona una data scadenza maggiore della data di acquisto!", Toast.LENGTH_SHORT).show();
+                            System.out.println("scaduto");
 
 
-                               DBRef.child(nodi[finalI]).child("Scaduto").setValue("1");
-                           }
-
-                           @Override
-                           public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                           }
-                       };
-                       DBRef.addListenerForSingleValueEvent(messageListener);
+                            final int finalI = i;
+                            ValueEventListener messageListener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                   }
+                                    DBRef.child(nodi[finalI]).child("Scaduto").setValue("1");
+                                }
 
-                   //System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-               } catch (ParseException e) {
-                   //data_scadenza.setText(null);
-                   e.printStackTrace();
-               }
-           }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            };
+                            DBRef.addListenerForSingleValueEvent(messageListener);
+
+
+                        }
+
+                        //System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                    } catch (ParseException e) {
+                        //data_scadenza.setText(null);
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
 
     }

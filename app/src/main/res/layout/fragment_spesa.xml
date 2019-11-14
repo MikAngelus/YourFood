@@ -145,6 +145,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.75" />
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart_spese"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline28"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline29"
+        app:layout_constraintTop_toTopOf="@+id/guideline43" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline47"
         android:layout_width="wrap_content"
@@ -435,7 +444,6 @@
         android:id="@+id/textViewRiepilogoMensile"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Riepilogo Mensile"
         android:textSize="24dp"
@@ -507,6 +515,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Categorie"
+        android:visibility="invisible"
         android:textAlignment="viewStart"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline44"
@@ -520,7 +529,8 @@
         android:id="@+id/lista_categoria"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintEnd_toStartOf="@+id/guideline48"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
@@ -536,5 +546,16 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
         app:layout_constraintStart_toStartOf="@+id/guideline48"
         app:layout_constraintTop_toTopOf="@+id/guideline44" />
+
+    <Button
+        android:id="@+id/view_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Andamento"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/guideline27"
+        app:layout_constraintEnd_toStartOf="@+id/guideline30"
+        app:layout_constraintStart_toStartOf="@+id/guideline48"
+        app:layout_constraintTop_toTopOf="@+id/guideline32" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

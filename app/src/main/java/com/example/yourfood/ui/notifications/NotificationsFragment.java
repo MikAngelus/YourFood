@@ -1,6 +1,7 @@
 package com.example.yourfood.ui.notifications;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -33,6 +34,15 @@ import java.util.Calendar;
 
 public class NotificationsFragment extends Fragment{
 
+    private static final long SIX_HOURS = 200000000;
+    private static final long ASAP = 2;
+    private NotificationManager mNotificationManager;
+
+
+    private final static int INTERVAL = 1000 * 60 * 2; //2 minutes
+
+
+
     private NotificationsViewModel notificationsViewModel;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
 
@@ -44,7 +54,7 @@ public class NotificationsFragment extends Fragment{
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        final View root = inflater.inflate(R.layout.fragment_notifications, container, false);
 
 
         final Switch attiva_notifiche = root.findViewById(R.id.attivo);
@@ -67,27 +77,30 @@ public class NotificationsFragment extends Fragment{
 
         ValueEventListener messageListener = new ValueEventListener() {
 
+
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
+
                 String notifiche = dataSnapshot.child("Notifiche").child("Attivo").getValue().toString();
-                String orario= dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
-                String read_day= dataSnapshot.child("Notifiche").child("Day_before").getValue().toString();
+                String orario = dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
+                String read_day = dataSnapshot.child("Notifiche").child("Day_before").getValue().toString();
                 int _day = Integer.parseInt(read_day);
 
-                day.setSelection(_day-1);
+                day.setSelection(_day - 1);
 
 
                 ora_selezionata.setText(orario);
 
                 read_notifiche[0] = Integer.parseInt(notifiche);
-                Toast.makeText(getActivity(), ""+ read_notifiche[0],Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
 
-                if(read_notifiche[0]==1){
+                if (read_notifiche[0] == 1) {
 
                     nascondi.setVisibility(View.VISIBLE);
-                    attivo[0] =false;
+                    attivo[0] = false;
                     attiva_notifiche.setChecked(true);
 
                 }
@@ -105,10 +118,10 @@ public class NotificationsFragment extends Fragment{
         DBRef.addListenerForSingleValueEvent(messageListener);
 
 
-        if(read_notifiche[0]==1){
+        if (read_notifiche[0] == 1) {
 
             nascondi.setVisibility(View.VISIBLE);
-            attivo[0] =false;
+            attivo[0] = false;
             attiva_notifiche.setChecked(true);
             salva.setVisibility(View.VISIBLE);
             disable.setVisibility(View.VISIBLE);
@@ -120,26 +133,24 @@ public class NotificationsFragment extends Fragment{
 
 
                 nascondi.setVisibility(View.VISIBLE);
-                attivo[0] =false;
+                attivo[0] = false;
                 salva.setVisibility(View.GONE);
                 disable.setVisibility(View.GONE);
 
 
-                if(isChecked){
+                if (isChecked) {
 
                     nascondi.setVisibility(View.GONE);
-                    attivo[0] =true;
+                    attivo[0] = true;
                     salva.setVisibility(View.VISIBLE);
                     disable.setVisibility(View.VISIBLE);
 
-                   // final int[] read_notifiche = new int[1];
-
-
+                    // final int[] read_notifiche = new int[1];
 
 
                 }
 
-                Toast.makeText(getActivity(), ""+attivo[0],Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + attivo[0], Toast.LENGTH_SHORT).show();
 
 
                 ValueEventListener messageListener = new ValueEventListener() {
@@ -147,12 +158,10 @@ public class NotificationsFragment extends Fragment{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if (!attivo[0]){
+                        if (!attivo[0]) {
 
-                        DBRef.child("Notifiche").child("Attivo").setValue("0");
-                        }
-
-                        else {
+                            DBRef.child("Notifiche").child("Attivo").setValue("0");
+                        } else {
                             DBRef.child("Notifiche").child("Attivo").setValue("1");
                         }
 
@@ -167,7 +176,6 @@ public class NotificationsFragment extends Fragment{
 
                 };
                 DBRef.addListenerForSingleValueEvent(messageListener);
-
 
 
             }
@@ -198,7 +206,45 @@ public class NotificationsFragment extends Fragment{
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                ora_selezionata.setText(hourOfDay + ":" + minute);
+
+                if(hourOfDay<10){
+
+                    if(minute<10){
+
+                        ora_selezionata.setText("0"+hourOfDay + ":0" + minute);
+
+                    }
+
+                    else{
+
+                        ora_selezionata.setText("0"+hourOfDay + ":" + minute);
+
+
+                    }
+
+
+                }
+
+                else{
+
+                    if(minute<10){
+
+                        ora_selezionata.setText(hourOfDay + ":0" + minute);
+
+                    }
+
+                    else{
+
+                        ora_selezionata.setText(hourOfDay + ":" + minute);
+
+
+                    }
+
+                }
+
+
+
+
 
                 String selectedTime = (String) ora_selezionata.getText();
                 DBRef.child("Notifiche").child("Orario").setValue(selectedTime);
@@ -217,8 +263,15 @@ public class NotificationsFragment extends Fragment{
                 final String dataDay = String.valueOf(idDay);
                 DBRef.child("Notifiche").child("Day_before").setValue(dataDay);
 
+
+                // Starts the function below
+                //addNotification();
+
+
             }
         });
+
+
 
 
         /*
@@ -235,22 +288,26 @@ public class NotificationsFragment extends Fragment{
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });<
 */
 
         disable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nascondi.setVisibility(View.VISIBLE);
-                attivo[0] =false;
+                attivo[0] = false;
                 attiva_notifiche.setChecked(false);
                 DBRef.child("Notifiche").child("Attivo").setValue("0");
                 salva.setVisibility(View.GONE);
                 disable.setVisibility(View.GONE);
             }
         });
+
+
         return root;
+
     }
+
 
 
 }
