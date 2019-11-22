@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.yourfood.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -342,15 +343,20 @@ public class AddFragment extends Fragment {
 
                         // resetCampi();
 
-                        Toast.makeText(getActivity(), "Prodotto aggiunto alla lista!", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), R.string.saved, Snackbar.LENGTH_SHORT)
+                                .show();
+
+                       // Toast.makeText(getActivity(), "Prodotto aggiunto alla lista!", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        Toast.makeText(getActivity(), "Inserisci una quantità o costo valida!", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "Inserisci una quantità o costo valida!", Snackbar.LENGTH_SHORT).show();
+
+                        //Toast.makeText(getActivity(), "Inserisci una quantità o costo valida!", Toast.LENGTH_SHORT).show();
 
                     }
                 }else {
 
-                    Toast.makeText(getActivity(), "Dati mancanti", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Attenzione: dati mancanti!", Snackbar.LENGTH_SHORT).show();
 
                 }
             }

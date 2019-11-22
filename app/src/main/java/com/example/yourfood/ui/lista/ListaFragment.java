@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourfood.ListDialog;
 import com.example.yourfood.R;
@@ -37,6 +40,10 @@ import static java.lang.Integer.parseInt;
 
 public class ListaFragment extends Fragment {
 
+
+    public RecyclerView mRecyclerView;
+    public ExampleAdapter mAdapter;
+    public RecyclerView.LayoutManager mLayoutManager;
 
     final Date c = Calendar.getInstance().getTime();
     //System.out.println("Current time => " + c);
@@ -61,6 +68,8 @@ public class ListaFragment extends Fragment {
         final ListView myListView;
         final ListView myListView2;
 
+        final ArrayList<item> list = new ArrayList<>();
+        final RecyclerView mRecyclerView = root.findViewById(R.id.recyler_view);
 
         myListView = (ListView) root.findViewById(R.id.daconsumare);
         final Spinner tipo = root.findViewById(R.id.tipo_prodotto);
@@ -109,9 +118,9 @@ public class ListaFragment extends Fragment {
 
                     verticale_merenda.setGuidelinePercent(0.55f);
                 }
-
+                list.clear();
                 myArrayList.clear();
-                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView);
+                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView, list, mRecyclerView);
 
             }
         });
@@ -141,9 +150,9 @@ public class ListaFragment extends Fragment {
 
 
                 }
-
+                list.clear();
                 myArrayList.clear();
-                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView);
+                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView, list, mRecyclerView);
 
             }
         });
@@ -173,9 +182,9 @@ public class ListaFragment extends Fragment {
 
 
                 }
-
+                list.clear();
                 myArrayList.clear();
-                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView);
+                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView, list, mRecyclerView);
 
             }
         });
@@ -210,12 +219,29 @@ public class ListaFragment extends Fragment {
 
 
                 }
-
+                list.clear();
                 myArrayList.clear();
-                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView);
+                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView, list, mRecyclerView);
 
             }
         });
+
+
+        Button recycler = root.findViewById(R.id.recyler);
+        recycler.setVisibility(View.INVISIBLE);
+
+      /*
+        recycler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new RecyclerViewProdotti();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+        */
 
 
         tipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -224,7 +250,8 @@ public class ListaFragment extends Fragment {
                                                //Toast.makeText(getActivity(), ""+tipo.getSelectedItemId() ,Toast.LENGTH_SHORT).show();
                                                Toast.makeText(getActivity(), ""+currentDate ,Toast.LENGTH_SHORT).show();
                                                myArrayList.clear();
-                                               setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView);
+                                               list.clear();
+                                               setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView, list, mRecyclerView);
 
                                                /*Fragment someFragment = new ListaFragment();
                                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -255,12 +282,17 @@ public class ListaFragment extends Fragment {
 
 
 
-    private void setLista(final int[] scelta_pasto, final Spinner tipo, final ArrayList<String> myArrayList, final ArrayAdapter<String> myArrayAdapter, final ListView myListView){
+    private void setLista(final int[] scelta_pasto, final Spinner tipo, final ArrayList<String> myArrayList, final ArrayAdapter<String> myArrayAdapter, final ListView myListView, final ArrayList<item> list, final RecyclerView mRecyclerView){
+
+                mRecyclerView.setHasFixedSize(true);
+                mLayoutManager= new LinearLayoutManager(getActivity());
+                mAdapter = new ExampleAdapter(list);
+                mRecyclerView.setLayoutManager(mLayoutManager);
 
                 ValueEventListener messageListener = new ValueEventListener() {
 
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
 
 
                         String index = dataSnapshot.child("index").getValue().toString();
@@ -285,7 +317,7 @@ public class ListaFragment extends Fragment {
 
                             //String count= i.toString();
                             final String count = Integer.toString(i);
-                            String nodo = "Prodotto_" + i;
+                            final String nodo = "Prodotto_" + i;
                             // String nome = dataSnapshot.child("Prodotto_" + count).child("Nome").getValue().toString();
                             boolean check = dataSnapshot.child(nodo).exists();
 
@@ -315,6 +347,16 @@ public class ListaFragment extends Fragment {
 
                                     if (scadere == 1 && tipo.getSelectedItemId() == 2) {
 
+                                        if(consumo==0){
+                                        list.add(new item(nome, "Scadenza: " +scadenza, "Da consumare", R.drawable.ic_checked));
+
+                                        }
+                                        else if(consumo==1){
+                                        list.add(new item(nome, "Scadenza: " +scadenza, "Già consumato", R.drawable.ic_appetite));
+
+                                        }
+
+
                                         myArrayList.add(nome);
                                         myListView.setAdapter(myArrayAdapter);
 
@@ -330,10 +372,13 @@ public class ListaFragment extends Fragment {
                                         y++;
 
                                         myListView.setBackgroundResource(R.drawable.list_dacosumare);
+
 
                                     }
 
                                     if (consumo < 1 && tipo.getSelectedItemId() == 0) {
+                                        list.add(new item(nome, "Scadenza: " + scadenza,"Da consumare", R.drawable.ic_checked));
+
 
                                         myArrayList.add(nome);
                                         myListView.setAdapter(myArrayAdapter);
@@ -350,10 +395,13 @@ public class ListaFragment extends Fragment {
                                         y++;
 
                                         myListView.setBackgroundResource(R.drawable.list_dacosumare);
+
 
                                     }
 
                                     if (consumo > 0 && tipo.getSelectedItemId() == 1) {
+                                        list.add(new item(nome, "Scadenza: " + scadenza, "Già consumato", R.drawable.ic_appetite));
+
 
                                         myArrayList.add(nome);
                                         myListView.setAdapter(myArrayAdapter);
@@ -374,7 +422,66 @@ public class ListaFragment extends Fragment {
 
                                     }
 
+
+
+                                    mRecyclerView.setAdapter(mAdapter);
+
+
                                 }
+
+
+
+                                mAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position) {
+                                        //list.get(position).disableCheck(R.drawable.ic_appetite);
+                                        mAdapter.notifyItemChanged(position);
+                                        openDialog(lista_nome[position], lista_dataScadenza[position], lista_dataAcquisto[position], lista_costo[position], lista_pasto[position], lista_categoria[position], lista_quantita[position], lista_nodo[position], lista_consumato[position]);
+/*
+                                        Fragment someFragment = new EditFragment();
+                                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                        transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                                        transaction.commit();
+                                        ((EditFragment) someFragment).posizione=lista_nodo[position];*/
+                                    }
+
+                                    @Override
+                                    public void onDeleteClick(int position) {
+
+                                        list.remove(position);
+                                        mAdapter.notifyItemRemoved(position);
+                                        final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+                                        final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+                                        final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+ lista_nodo[position]);
+                                        DBRef.removeValue();
+                                        Toast.makeText(getActivity(), "Eliminato: " + lista_nome[position] , Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onConsumatoClick(int position) {
+
+                                        int read_consumato= parseInt(lista_consumato[position]);
+
+                                        if(tipo.getSelectedItemId()==0 || ( tipo.getSelectedItemId()==2 && read_consumato==0 ) ){
+                                            list.remove(position);
+                                            mAdapter.notifyItemRemoved(position);
+                                            final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
+                                            final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
+                                            final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/" + lista_nodo[position]);
+                                            DBRef.child("Consumato").setValue("1");
+                                            Toast.makeText(getActivity(), "Consumato: " + lista_nome[position], Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+
+
+                                        }
+
+                                    }
+                                });
+
+
+
 
 
                                 myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -394,7 +501,12 @@ public class ListaFragment extends Fragment {
 
                             }
 
+
+
+
                         }
+
+
 
 
                         if(myArrayList.size() <1){
@@ -407,10 +519,12 @@ public class ListaFragment extends Fragment {
                         else if(myArrayList.size() >0){
                             controllo_scadenza(lista_dataScadenza, lista_nodo, real_index, lista_consumato);
                             //Toast.makeText(getActivity(), "lista piena", Toast.LENGTH_SHORT).show();
-                            myListView.setVisibility(View.VISIBLE);
+                           // myListView.setVisibility(View.VISIBLE);
+                            myListView.setVisibility(View.INVISIBLE);
 
 
                         }
+
 
 
 
@@ -425,6 +539,7 @@ public class ListaFragment extends Fragment {
 
                 };
                 DBRef.addListenerForSingleValueEvent(messageListener);
+
 
 
 

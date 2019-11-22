@@ -553,6 +553,7 @@
         android:layout_height="wrap_content"
         android:text="Andamento"
         android:gravity="center"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toTopOf="@+id/guideline27"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
         app:layout_constraintStart_toStartOf="@+id/guideline48"

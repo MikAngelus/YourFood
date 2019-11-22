@@ -30,8 +30,6 @@ public class AndamentoFragment extends Fragment {
     final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/");
 
 
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,9 +58,10 @@ public class AndamentoFragment extends Fragment {
        // dataSet.setSelectionShift(12f);
         //dataSet.setValueFormatter(new LargeValueFormatter(" €"));
         dataSet.setValueTextSize(11f);
+
+                dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setValueTextColor(Color.WHITE);
 
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         BarData data = new BarData(dataSet);
         chart.setData(data);
