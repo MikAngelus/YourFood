@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
-
+    app:startDestination="@id/navigation_home">
 
 
     <fragment
         android:id="@+id/navigation_edit"
-        android:name="com.example.yourfood.ui.edit.EditFragment"
+        android:name="com.example.yourfood.ui.lista.edit.EditFragment"
         android:label="Edit"
         tools:layout="@layout/fragment_edit" />
 
@@ -17,7 +16,9 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.yourfood.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications"
+        />
+
 
     <fragment
         android:id="@+id/navigation_lista"

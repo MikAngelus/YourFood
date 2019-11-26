@@ -1,4 +1,4 @@
-package com.example.yourfood.ui.edit;
+package com.example.yourfood.ui.lista.edit;
 
 import androidx.lifecycle.ViewModel;
 

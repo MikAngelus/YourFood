@@ -1,4 +1,4 @@
-package com.example.yourfood.ui.edit;
+package com.example.yourfood.ui.lista.edit;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -73,6 +73,26 @@ public class EditFragment extends Fragment {
         final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+posizione);
 
         Toast.makeText(getActivity(), posizione, Toast.LENGTH_LONG).show();
+
+
+        final Button back = root.findViewById(R.id.back);
+
+
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    Fragment someFragment = new ListaFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
+                    transaction.addToBackStack("Modifica Prodotto");  // if written, this transaction will be added to backstack
+                    transaction.commit();
+
+
+                    }
+        });
 
 
         ValueEventListener messageListener = new ValueEventListener() {
@@ -407,8 +427,6 @@ public class EditFragment extends Fragment {
         return root;
 
     }
-
-
 
 
 

@@ -341,6 +341,8 @@ public class ListaFragment extends Fragment {
                                 int scadere = parseInt(scaduto);
                                 int var_pasto=parseInt(pasto);
 
+                                float g=1.0f;
+
                                 if(scelta_pasto[0] < 0 || scelta_pasto[0] == var_pasto) {
 
                                     //Toast.makeText(getActivity(), "check pasto" ,Toast.LENGTH_SHORT).show();
@@ -352,7 +354,7 @@ public class ListaFragment extends Fragment {
 
                                         }
                                         else if(consumo==1){
-                                        list.add(new item(nome, "Scadenza: " +scadenza, "Già consumato", R.drawable.ic_appetite));
+                                        list.add(new item(nome, "Scadenza: " +scadenza, "", g, "Consumato"));
 
                                         }
 
@@ -400,7 +402,7 @@ public class ListaFragment extends Fragment {
                                     }
 
                                     if (consumo > 0 && tipo.getSelectedItemId() == 1) {
-                                        list.add(new item(nome, "Scadenza: " + scadenza, "Già consumato", R.drawable.ic_appetite));
+                                        list.add(new item(nome, "Scadenza: " + scadenza, "", g, "Consumato"));
 
 
                                         myArrayList.add(nome);

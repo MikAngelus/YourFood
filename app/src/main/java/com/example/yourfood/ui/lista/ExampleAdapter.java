@@ -54,9 +54,8 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
         public TextView labelConsumato;
         public TextView mTextView1;
         public TextView mTextView2;
+        public TextView labelConsumo;
         public Guideline g;
-
-
 
         public viewHolder(@NonNull View itemView, final OnItemClickListener listener, final boolean mResponse) {
             super(itemView);
@@ -65,10 +64,8 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
             mTextView1=itemView.findViewById(R.id.line1);
             mTextView2=itemView.findViewById(R.id.line2);
             labelConsumato=itemView.findViewById(R.id.label_consumato);
+            labelConsumo=itemView.findViewById(R.id.label_consumo);
             g=itemView.findViewById(R.id.guideline72);
-
-
-
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -128,9 +125,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
                 }
             });
 
-
         }
-
 
     }
 
@@ -156,7 +151,13 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
     holder.mConsumato.setImageResource(currentItem.getmImageConsumato());
     holder.mTextView1.setText(currentItem.getText1());
     holder.mTextView2.setText(currentItem.getText2());
+    holder.labelConsumo.setText(currentItem.getText4());
     holder.labelConsumato.setText(currentItem.getText3());
+
+    float x=0.99f;
+    if(currentItem.getPerc() > x) {
+        holder.g.setGuidelinePercent(currentItem.getPerc());
+    }
 
     }
 

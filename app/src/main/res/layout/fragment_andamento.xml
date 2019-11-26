@@ -11,21 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/customcategoria"
         app:layout_constraintBottom_toTopOf="@+id/guideline71"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline21" />
-
-    <View
-        android:id="@+id/hr2"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@color/colorDarkGrey"
-        app:layout_constraintEnd_toStartOf="@+id/guideline60"
-        app:layout_constraintStart_toStartOf="@+id/guideline59"
-        app:layout_constraintTop_toBottomOf="@+id/headerView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline21"
@@ -35,18 +27,11 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline56"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline58"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline70"
@@ -75,18 +60,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
-
-    <View
-        android:id="@+id/headerView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/customcategoria"
-        app:layout_constraintBottom_toTopOf="@+id/guideline56"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline59"
@@ -124,117 +97,60 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
+        android:text="Andamento anno "
         android:textAlignment="textStart"
-        android:text="Prodotti scaduti"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline58"
-        app:layout_constraintEnd_toStartOf="@+id/guideline66"
-        app:layout_constraintStart_toStartOf="@+id/guideline59"
-        app:layout_constraintTop_toTopOf="@+id/guideline56"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:textAlignment="textStart"
-        android:textSize="16dp"
-        android:text="Prodotti consumati"
-        app:layout_constraintBottom_toTopOf="@+id/guideline58"
-        app:layout_constraintEnd_toStartOf="@+id/guideline65"
-        app:layout_constraintStart_toStartOf="@+id/guideline66"
-        app:layout_constraintTop_toTopOf="@+id/guideline56"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:textAlignment="textStart"
-        android:textSize="16dp"
-        android:text="Non consumati"
-        app:layout_constraintBottom_toTopOf="@+id/guideline58"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline21"
         app:layout_constraintEnd_toStartOf="@+id/guideline67"
-        app:layout_constraintStart_toStartOf="@+id/guideline65"
-        app:layout_constraintTop_toTopOf="@+id/guideline56"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:textAlignment="textStart"
-        android:textSize="16dp"
-        android:text="Consumati scaduti"
-        app:layout_constraintBottom_toTopOf="@+id/guideline58"
-        app:layout_constraintEnd_toStartOf="@+id/guideline60"
-        app:layout_constraintStart_toStartOf="@+id/guideline67"
-        app:layout_constraintTop_toTopOf="@+id/guideline56"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/prod_scaduti"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="viewStart"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline66"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline59"
-        app:layout_constraintTop_toTopOf="@+id/guideline58" />
-
-    <TextView
-        android:id="@+id/prod_consumati"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="viewStart"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline65"
-        app:layout_constraintStart_toStartOf="@+id/guideline66"
-        app:layout_constraintTop_toTopOf="@+id/guideline58" />
-
-    <TextView
-        android:id="@+id/prod_non_consumati"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="viewStart"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline67"
-        app:layout_constraintStart_toStartOf="@+id/guideline65"
-        app:layout_constraintTop_toTopOf="@+id/guideline58" />
-
-    <TextView
-        android:id="@+id/prod_scaduti_consumati"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-
-        android:textAlignment="viewStart"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline60"
-        app:layout_constraintStart_toStartOf="@+id/guideline67"
-        app:layout_constraintTop_toTopOf="@+id/guideline58" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/bar_chart"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline71"
         app:layout_constraintEnd_toStartOf="@+id/guideline60"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline59"
-        app:layout_constraintTop_toTopOf="@+id/guideline70" />
+        app:layout_constraintTop_toTopOf="@+id/guideline21"
+        app:layout_constraintVertical_bias="1.0">
 
+    </com.github.mikephil.charting.charts.BarChart>
 
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Numero mese"
+        android:textSize="14dp"
+        android:textColor="@color/colorDarkGrey"
+        app:layout_constraintEnd_toStartOf="@+id/guideline67"
+        app:layout_constraintStart_toStartOf="@+id/guideline66"
+        app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
+
+    <Spinner
+        android:id="@+id/spinnerAnno"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/anno"
+        android:spinnerMode="dropdown"
+        style="@style/Widget.AppCompat.DropDownItem.Spinner"
+        app:layout_constraintBottom_toTopOf="@+id/guideline21"
+        app:layout_constraintEnd_toStartOf="@+id/guideline60"
+        app:layout_constraintStart_toStartOf="@+id/guideline65"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 

@@ -158,6 +158,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:checked="true"
+        android:enabled="false"
         android:theme="@style/SCBSwitch"
         app:layout_constraintEnd_toStartOf="@+id/guideline57"
         app:layout_constraintStart_toStartOf="@+id/guideline55"
@@ -168,6 +169,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:checked="true"
+        android:enabled="false"
         android:theme="@style/SCBSwitch"
         app:layout_constraintEnd_toStartOf="@+id/guideline57"
         app:layout_constraintStart_toStartOf="@+id/guideline55"
@@ -175,10 +177,11 @@
 
     <ImageButton
         android:id="@+id/btnTime"
+        style="@android:style/Widget.DeviceDefault.ImageButton"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/customshape"
+        android:background="@color/colorAccentLight"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toStartOf="@+id/guideline57"
         app:layout_constraintTop_toTopOf="@+id/guideline61"

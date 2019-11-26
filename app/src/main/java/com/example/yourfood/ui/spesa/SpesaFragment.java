@@ -79,7 +79,7 @@ public class SpesaFragment extends Fragment {
 
         final PieChart chart = root.findViewById(R.id.chart_spese);
 
-final Button andamento= root.findViewById(R.id.view_bar);
+        final Button andamento= root.findViewById(R.id.view_bar);
 
         andamento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -387,10 +387,6 @@ final Button andamento= root.findViewById(R.id.view_bar);
 
 
 
-
-
-
-
                 float parziale_mensile=0;
                 for(int p=0; p<4; p++){
 
@@ -427,8 +423,9 @@ final Button andamento= root.findViewById(R.id.view_bar);
 
 
                         if(SpesaCategoriaArrayList.get(w)!=0){
+
                             count++;
-                        pieEntries.add(new PieEntry((SpesaCategoriaArrayList.get(w)), monthNames[w]));
+                            pieEntries.add(new PieEntry((SpesaCategoriaArrayList.get(w)), monthNames[w]));
 
                         }
 

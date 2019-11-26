@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.yourfood.ui.edit.EditFragment;
+import com.example.yourfood.ui.lista.edit.EditFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -84,6 +84,8 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
         builder.setNegativeButton("Modifica", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+
 
                 Fragment someFragment = new EditFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

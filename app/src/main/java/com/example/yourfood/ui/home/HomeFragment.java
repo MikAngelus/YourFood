@@ -13,15 +13,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.yourfood.Login;
 import com.example.yourfood.MainActivity;
 import com.example.yourfood.R;
+import com.example.yourfood.ui.lista.ListaFragment;
+import com.example.yourfood.ui.spesa.SpesaFragment;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -73,7 +78,18 @@ public class HomeFragment extends Fragment {
         final TextView label_prod_scaduti_consumati = root.findViewById(R.id.prod_scaduti_consumati);
         final TextView label_prod_non_consumati = root.findViewById(R.id.prod_non_consumati);
 
+        final Button logout = root.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
 
+                Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
+
+
+            }
+        });
 
 
         final Date ora_notify = new Date();
@@ -89,7 +105,33 @@ public class HomeFragment extends Fragment {
         final int[] prodotti_non_consumati = {0};
 
 
+        final Button spese=root.findViewById(R.id.view_spesa);
 
+        spese.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Fragment someFragment = new SpesaFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+
+        final Button prodotti=root.findViewById(R.id.view_prodotti);
+        prodotti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Fragment someFragment = new ListaFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack("Home");  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
         ValueEventListener messageListener = new ValueEventListener() {
 
             @Override
@@ -311,19 +353,18 @@ public class HomeFragment extends Fragment {
                 label_prod_scaduti_consumati.setText("" + prodotti_scaduti_consumati[0]);
 
 
-
-
-
-
-                int rainfall[] ={prodotti_consumati[0]+prodotti_scaduti_consumati[0],prodotti_scaduti[0], prodotti_non_consumati[0]};
+      int rainfall[] ={prodotti_consumati[0]+prodotti_scaduti_consumati[0],prodotti_scaduti[0], prodotti_non_consumati[0]};
                 String monthNames[] = {"Consumati","Scaduti","Non Consumati"};
 
                 List<PieEntry> pieEntries = new ArrayList<>();
-
+                int count=0;
                 for(int i=0; i<rainfall.length; i++){
 
 
-                    pieEntries.add(new PieEntry(rainfall[i], monthNames[i]));
+                    if(rainfall[i]!=0) {
+                        count++;
+                        pieEntries.add(new PieEntry(rainfall[i], monthNames[i]));
+                    }
 
                 }
 
@@ -361,6 +402,23 @@ public class HomeFragment extends Fragment {
                 chart.setEntryLabelTextSize(16);
                 chart.setUsePercentValues(true);
                 chart.invalidate();
+
+
+                if(count==0){
+
+                    chart.setVisibility(View.GONE);
+                   // categoria.setVisibility(View.GONE);
+
+                }
+
+                else{
+
+                    chart.setVisibility(View.VISIBLE);
+
+                   // categoria.setVisibility(View.VISIBLE);
+
+                }
+
 
 /*
 

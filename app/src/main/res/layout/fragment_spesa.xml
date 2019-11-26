@@ -80,6 +80,7 @@
         android:id="@+id/spesa_totale"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:textAlignment="center"
         android:textSize="50dp"
@@ -149,6 +150,7 @@
         android:id="@+id/chart_spese"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
@@ -498,7 +500,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="Rapporto spesa totale / mese"
+        android:text="Spesa totale / mese"
         android:textAlignment="viewStart"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline43"
@@ -547,16 +549,30 @@
         app:layout_constraintStart_toStartOf="@+id/guideline48"
         app:layout_constraintTop_toTopOf="@+id/guideline44" />
 
+    <View
+        android:id="@+id/hr4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorGrey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline42" />
+
     <Button
         android:id="@+id/view_bar"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Andamento"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:text="Andamento"
         app:layout_constraintBottom_toTopOf="@+id/guideline27"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
-        app:layout_constraintStart_toStartOf="@+id/guideline48"
+        app:layout_constraintStart_toStartOf="@+id/guideline40"
         app:layout_constraintTop_toTopOf="@+id/guideline32" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
