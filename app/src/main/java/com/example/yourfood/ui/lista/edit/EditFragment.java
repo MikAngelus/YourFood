@@ -41,18 +41,13 @@ import static java.lang.Integer.parseInt;
 public class EditFragment extends Fragment {
 
 
-
     public String posizione;
 
     private EditFragmentModel editFragmentModel;
     private DatePickerDialog.OnDateSetListener mDateSetListenerAcquisto, mDateSetListenerScadenza;
-
-
-   /* final Integer[] dataControll = {0};
-    String data = null;*/
-
-
-
+    final Date c = Calendar.getInstance().getTime();
+    final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    final String currentDate = df.format(c);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,37 +58,30 @@ public class EditFragment extends Fragment {
         final EditText nome_prodotto = root.findViewById(R.id.editTextNomeProdotto);
         final EditText data_acquisto = root.findViewById(R.id.editTextAcquisto);
         final EditText data_scadenza = root.findViewById(R.id.editTextScadenza);
-        final Spinner pasto= root.findViewById(R.id.spinnerPasto);
+        final Spinner pasto = root.findViewById(R.id.spinnerPasto);
         final Spinner categoria = root.findViewById(R.id.spinnerCategoria);
         final EditText num_quantita = root.findViewById(R.id.editTextQuantita);
         final EditText costo = root.findViewById(R.id.editTextCosto);
-
         final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
         final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
-        final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+posizione);
-
-        Toast.makeText(getActivity(), posizione, Toast.LENGTH_LONG).show();
-
+        final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/" + posizione);
 
         final Button back = root.findViewById(R.id.back);
 
 
-
-
         back.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-                    Fragment someFragment = new ListaFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
-                    transaction.addToBackStack("Modifica Prodotto");  // if written, this transaction will be added to backstack
-                    transaction.commit();
+                Fragment someFragment = new ListaFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack("Modifica Prodotto");  // if written, this transaction will be added to backstack
+                transaction.commit();
 
 
-                    }
+            }
         });
-
 
         ValueEventListener messageListener = new ValueEventListener() {
 
@@ -101,36 +89,34 @@ public class EditFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                        String nome = dataSnapshot.child("Nome").getValue().toString();
-                        String scadenza = dataSnapshot.child("Data_scadenza").getValue().toString();
-                        String acquisto = dataSnapshot.child("Data_acquisto").getValue().toString();
-                        String costo1 = dataSnapshot.child("Costo").getValue().toString();
-                        String pasto1 = dataSnapshot.child("Pasto").getValue().toString();
-                        String categoria1 = dataSnapshot.child("Categoria").getValue().toString();
-                        String quantita = dataSnapshot.child("Quantita").getValue().toString();
+                String nome = dataSnapshot.child("Nome").getValue().toString();
+                String scadenza = dataSnapshot.child("Data_scadenza").getValue().toString();
+                String acquisto = dataSnapshot.child("Data_acquisto").getValue().toString();
+                String costo1 = dataSnapshot.child("Costo").getValue().toString();
+                String pasto1 = dataSnapshot.child("Pasto").getValue().toString();
+                String categoria1 = dataSnapshot.child("Categoria").getValue().toString();
+                String quantita = dataSnapshot.child("Quantita").getValue().toString();
 
-                        nome_prodotto.setText(nome);
-                        data_scadenza.setText(scadenza);
-                        data_acquisto.setText(acquisto);
-                        num_quantita.setText(quantita);
-                        costo.setText(costo1);
-                        int idPasto= Integer.parseInt(pasto1);
-                        pasto.setSelection(idPasto);
-                        int idCategoria= Integer.parseInt(categoria1);
-                        categoria.setSelection(idCategoria);
+                nome_prodotto.setText(nome);
+                data_scadenza.setText(scadenza);
+                data_acquisto.setText(acquisto);
+                num_quantita.setText(quantita);
+                costo.setText(costo1);
+                int idPasto = Integer.parseInt(pasto1);
+                pasto.setSelection(idPasto);
+                int idCategoria = Integer.parseInt(categoria1);
+                categoria.setSelection(idCategoria);
 
 
             }
 
             @Override
-            public void onCancelled (@NonNull DatabaseError databaseError){
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
 
-        }
-
-                ;DBRef.addListenerForSingleValueEvent(messageListener);
-
+        };
+        DBRef.addListenerForSingleValueEvent(messageListener);
 
 
         Calendar c = Calendar.getInstance();
@@ -155,20 +141,48 @@ public class EditFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int mDay, int mMonth, int mYear) {
                 // data_acquisto.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
-                String day="" + mYear;
-                String month="" + (mMonth+1);
-                String year="" +mDay;
+                String day = "" + mYear;
+                String month = "" + (mMonth + 1);
+                String year = "" + mDay;
 
-                if(mYear>0 && mYear<10){
-                    day= "0"+day;
+                if (mYear > 0 && mYear < 10) {
+                    day = "0" + day;
                 }
 
-                if(mMonth+1>0 && mMonth+1<10) {
-                    month="0"+month;
+                if (mMonth + 1 > 0 && mMonth + 1 < 10) {
+                    month = "0" + month;
                 }
 
                 data_acquisto.setText(day + "/" + month + "/" + year);
+                Calendar rightNow = Calendar.getInstance();
+                int currentDay = rightNow.get(Calendar.DAY_OF_MONTH);
+                int currentMounth = rightNow.get(Calendar.MONTH);
+                int currentYear = rightNow.get(Calendar.YEAR);
 
+
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String inputString1 = data_acquisto.getText().toString();
+                String inputString2;
+
+                try {
+
+                    Date date1 = myFormat.parse(inputString1);
+                    Date date2 = myFormat.parse(currentDate);
+
+                    long diff = date1.getTime() - date2.getTime();
+                    //long diff=0;
+
+                    if (diff > 0) {
+
+                        data_acquisto.setText(null);
+                        Toast.makeText(getActivity(), "Non puoi viaggiare nel tempo!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } catch (ParseException e) {
+                    data_acquisto.setText(null);
+                    e.printStackTrace();
+                }
 
 
             }
@@ -213,7 +227,6 @@ public class EditFragment extends Fragment {
         mDateSetListenerScadenza = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int mDay, int mMonth, int mYear) {
-                // data_acquisto.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
                 String day = "" + mYear;
                 String month = "" + (mMonth + 1);
                 String year = "" + mDay;
@@ -298,26 +311,26 @@ public class EditFragment extends Fragment {
         });
 
 
-        final Button reset=root.findViewById(R.id.delete);
+        final Button reset = root.findViewById(R.id.delete);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 final FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
                 final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
-                final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+ posizione);
+                final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/" + posizione);
                 DBRef.removeValue();
 
                 Fragment someFragment = new ListaFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
 
             }
         });
 
-        Button salva=root.findViewById(R.id.save);
+        Button salva = root.findViewById(R.id.save);
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -343,40 +356,10 @@ public class EditFragment extends Fragment {
                         final String dataAcquisto = data_acquisto.getText().toString();
                         int idPasto = pasto.getSelectedItemPosition();
                         final String dataPasto = String.valueOf(idPasto);
-                        int idCategoria=categoria.getSelectedItemPosition();
+                        int idCategoria = categoria.getSelectedItemPosition();
                         final String dataCategoria = String.valueOf(idCategoria);
                         final String dataQuantita = num_quantita.getText().toString();
                         final String dataCosto = costo.getText().toString();
-
-                /*
-                data_scadenza.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        calendarView.setVisibility(View.VISIBLE);
-                        dataControll[0] = 1;
-                    }
-                });
-
-                reset.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        calendarView.setVisibility(View.VISIBLE);
-                        dataControll[0] = 2;
-                    }
-                });
-
-                calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-                    @Override
-                    public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                        data = i + "/" + i1 + "/" + i2;
-                        if(dataControll[0] == 1){
-                            data_scadenza.setText(data.toString());
-                        }else {
-                            data_acquisto.setText(data.toString());
-                        }
-                        calendarView.setVisibility(View.INVISIBLE);
-                    }
-                });*/
 
                         ValueEventListener messageListener = new ValueEventListener() {
                             @Override
@@ -398,25 +381,18 @@ public class EditFragment extends Fragment {
                             }
                         };
                         DBRef.addListenerForSingleValueEvent(messageListener);
-
                         // resetCampi();
-
                         Toast.makeText(getActivity(), "Prodotto modificato correttamente", Toast.LENGTH_SHORT).show();
                     } else {
-
                         Toast.makeText(getActivity(), "Inserisci una quantità o costo valida!", Toast.LENGTH_SHORT).show();
-
                     }
-                }else {
-
+                } else {
                     Toast.makeText(getActivity(), "Dati mancanti", Toast.LENGTH_SHORT).show();
-
                 }
-
 
                 Fragment someFragment = new ListaFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                transaction.replace(R.id.nav_host_fragment, someFragment); // give your fragment container id in first parameter
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
             }
@@ -427,7 +403,5 @@ public class EditFragment extends Fragment {
         return root;
 
     }
-
-
 
 }

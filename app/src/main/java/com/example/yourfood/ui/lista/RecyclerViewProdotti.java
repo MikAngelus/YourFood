@@ -39,23 +39,6 @@ public class RecyclerViewProdotti extends Fragment {
 
 
         ArrayList<item> list = new ArrayList<>();
-        /*list.add(new item(R.drawable.ic_hourglass, "Line1", "Line2"));
-        list.add(new item(R.drawable.ic_burger, "Line3", "Line4"));
-        list.add(new item(R.drawable.ic_hourglass, "Line1", "Line2"));
-        list.add(new item(R.drawable.ic_burger, "Line3", "Line4"));
-        list.add(new item(R.drawable.ic_hourglass, "Line1", "Line2"));
-        list.add(new item(R.drawable.ic_burger, "Line3", "Line4"));
-        list.add(new item(R.drawable.ic_hourglass, "Line1", "Line2"));
-        list.add(new item(R.drawable.ic_burger, "Line3", "Line4"));
-        list.add(new item(R.drawable.ic_hourglass, "Line1", "Line2"));
-        list.add(new item(R.drawable.ic_burger, "Line3", "Line4"));
-        list.add(new item(R.drawable.ic_hourglass, "Line1", "Line2"));
-        list.add(new item(R.drawable.ic_burger, "Line3", "Line4"));*/
-
-
-
-
-
         mRecyclerView = root.findViewById(R.id.recyler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager= new LinearLayoutManager(getActivity());

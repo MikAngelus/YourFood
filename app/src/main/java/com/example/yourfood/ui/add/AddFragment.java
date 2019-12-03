@@ -43,15 +43,9 @@ public class AddFragment extends Fragment {
     private AddViewModel addViewModel;
     private DatePickerDialog.OnDateSetListener mDateSetListenerAcquisto, mDateSetListenerScadenza;
 
-
-   /* final Integer[] dataControll = {0};
-    String data = null;*/
-   final Date c = Calendar.getInstance().getTime();
-    //System.out.println("Current time => " + c);
-
+    final Date c = Calendar.getInstance().getTime();
     final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     final String currentDate = df.format(c);
-
 
 
     @Override
@@ -92,24 +86,24 @@ public class AddFragment extends Fragment {
         mDateSetListenerAcquisto = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int mDay, int mMonth, int mYear) {
-               // data_acquisto.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
-                String day="" + mYear;
-                String month="" + (mMonth+1);
-                String year="" +mDay;
+                // data_acquisto.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
+                String day = "" + mYear;
+                String month = "" + (mMonth + 1);
+                String year = "" + mDay;
 
-               if(mYear>0 && mYear<10){
-                    day= "0"+day;
+                if (mYear > 0 && mYear < 10) {
+                    day = "0" + day;
                 }
 
-                if(mMonth+1>0 && mMonth+1<10) {
-                    month="0"+month;
+                if (mMonth + 1 > 0 && mMonth + 1 < 10) {
+                    month = "0" + month;
                 }
 
                 data_acquisto.setText(day + "/" + month + "/" + year);
                 Calendar rightNow = Calendar.getInstance();
                 int currentDay = rightNow.get(Calendar.DAY_OF_MONTH);
                 int currentMounth = rightNow.get(Calendar.MONTH);
-                int currentYear=rightNow.get(Calendar.YEAR);
+                int currentYear = rightNow.get(Calendar.YEAR);
 
 
                 SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -231,7 +225,6 @@ public class AddFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     // code to execute when EditText loses focus
-
                     SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
                     String inputString1 = data_acquisto.getText().toString();
                     String inputString2 = data_scadenza.getText().toString();
@@ -252,7 +245,7 @@ public class AddFragment extends Fragment {
                         }
 
                         System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-                      } catch (ParseException e) {
+                    } catch (ParseException e) {
 
                         data_scadenza.setText(null);
                         Toast.makeText(getActivity(), "Inserire una data scadenza valida: dd/mm/yy", Toast.LENGTH_SHORT).show();
@@ -264,7 +257,7 @@ public class AddFragment extends Fragment {
         });
 
 
-        final Button reset=root.findViewById(R.id.resetField);
+        final Button reset = root.findViewById(R.id.resetField);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -284,7 +277,7 @@ public class AddFragment extends Fragment {
 
         });
 
-        Button salva=root.findViewById(R.id.save);
+        Button salva = root.findViewById(R.id.save);
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -310,40 +303,10 @@ public class AddFragment extends Fragment {
                         final String dataAcquisto = data_acquisto.getText().toString();
                         int idPasto = pasto.getSelectedItemPosition();
                         final String dataPasto = String.valueOf(idPasto);
-                        int idCategoria=categoria.getSelectedItemPosition();
+                        int idCategoria = categoria.getSelectedItemPosition();
                         final String dataCategoria = String.valueOf(idCategoria);
                         final String dataQuantita = num_quantita.getText().toString();
                         final String dataCosto = costo.getText().toString();
-
-                /*
-                data_scadenza.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        calendarView.setVisibility(View.VISIBLE);
-                        dataControll[0] = 1;
-                    }
-                });
-
-                reset.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        calendarView.setVisibility(View.VISIBLE);
-                        dataControll[0] = 2;
-                    }
-                });
-
-                calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-                    @Override
-                    public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                        data = i + "/" + i1 + "/" + i2;
-                        if(dataControll[0] == 1){
-                            data_scadenza.setText(data.toString());
-                        }else {
-                            data_acquisto.setText(data.toString());
-                        }
-                        calendarView.setVisibility(View.INVISIBLE);
-                    }
-                });*/
 
                         ValueEventListener messageListener = new ValueEventListener() {
                             @Override
@@ -384,22 +347,12 @@ public class AddFragment extends Fragment {
                         num_quantita.setText(null);
                         costo.setText(null);
 
-                        /*
-                        Fragment someFragment = new ListaFragment();
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
-                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                        transaction.commit();
-                       // Toast.makeText(getActivity(), "Prodotto aggiunto alla lista!", Toast.LENGTH_SHORT).show();*/
-
                     } else {
 
                         Snackbar.make(getView(), "Inserisci una quantità o costo valida!", Snackbar.LENGTH_SHORT).show();
 
-                        //Toast.makeText(getActivity(), "Inserisci una quantità o costo valida!", Toast.LENGTH_SHORT).show();
-
                     }
-                }else {
+                } else {
 
                     Snackbar.make(getView(), "Attenzione: dati mancanti!", Snackbar.LENGTH_SHORT).show();
 
@@ -409,16 +362,12 @@ public class AddFragment extends Fragment {
             }
 
 
-
         });
 
 
-          return root;
+        return root;
 
     }
-
-
-
 
 
 }

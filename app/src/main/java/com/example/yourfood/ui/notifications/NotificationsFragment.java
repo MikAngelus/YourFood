@@ -32,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-public class NotificationsFragment extends Fragment{
+public class NotificationsFragment extends Fragment {
 
     private static final long SIX_HOURS = 200000000;
     private static final long ASAP = 2;
@@ -40,7 +40,6 @@ public class NotificationsFragment extends Fragment{
 
 
     private final static int INTERVAL = 1000 * 60 * 2; //2 minutes
-
 
 
     private NotificationsViewModel notificationsViewModel;
@@ -67,44 +66,30 @@ public class NotificationsFragment extends Fragment{
 
         final TextView ora_selezionata = root.findViewById(R.id.orario);
         final int[] read_notifiche = new int[1];
-
-
         final Button salva = root.findViewById(R.id.save);
         final Button disable = root.findViewById(R.id.disableNotif);
         salva.setVisibility(View.GONE);
         disable.setVisibility(View.GONE);
 
-
         ValueEventListener messageListener = new ValueEventListener() {
-
-
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-
 
                 String notifiche = dataSnapshot.child("Notifiche").child("Attivo").getValue().toString();
                 String orario = dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
                 String read_day = dataSnapshot.child("Notifiche").child("Day_before").getValue().toString();
                 int _day = Integer.parseInt(read_day);
-
                 day.setSelection(_day - 1);
-
-
                 ora_selezionata.setText(orario);
-
                 read_notifiche[0] = Integer.parseInt(notifiche);
-                //Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
 
                 if (read_notifiche[0] == 1) {
-
                     nascondi.setVisibility(View.VISIBLE);
                     attivo[0] = false;
                     attiva_notifiche.setChecked(true);
 
                 }
-
 
             }
 
@@ -116,7 +101,6 @@ public class NotificationsFragment extends Fragment{
 
         };
         DBRef.addListenerForSingleValueEvent(messageListener);
-
 
         if (read_notifiche[0] == 1) {
 
@@ -130,29 +114,17 @@ public class NotificationsFragment extends Fragment{
         attiva_notifiche.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
                 nascondi.setVisibility(View.VISIBLE);
                 attivo[0] = false;
                 salva.setVisibility(View.GONE);
                 disable.setVisibility(View.GONE);
 
-
                 if (isChecked) {
-
                     nascondi.setVisibility(View.GONE);
                     attivo[0] = true;
                     salva.setVisibility(View.VISIBLE);
                     disable.setVisibility(View.VISIBLE);
-
-                    // final int[] read_notifiche = new int[1];
-
-
                 }
-
-               // Toast.makeText(getActivity(), "" + attivo[0], Toast.LENGTH_SHORT).show();
-
-
                 ValueEventListener messageListener = new ValueEventListener() {
 
                     @Override
@@ -164,9 +136,6 @@ public class NotificationsFragment extends Fragment{
                         } else {
                             DBRef.child("Notifiche").child("Attivo").setValue("1");
                         }
-
-                        //Toast.makeText(getActivity(), ""+ read_notifiche[0],Toast.LENGTH_SHORT).show();
-
                     }
 
                     @Override
@@ -207,33 +176,27 @@ public class NotificationsFragment extends Fragment{
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
 
-                if(hourOfDay<10){
+                if (hourOfDay < 10) {
 
-                    if(minute<10){
+                    if (minute < 10) {
 
-                        ora_selezionata.setText("0"+hourOfDay + ":0" + minute);
+                        ora_selezionata.setText("0" + hourOfDay + ":0" + minute);
 
-                    }
+                    } else {
 
-                    else{
-
-                        ora_selezionata.setText("0"+hourOfDay + ":" + minute);
+                        ora_selezionata.setText("0" + hourOfDay + ":" + minute);
 
 
                     }
 
 
-                }
+                } else {
 
-                else{
-
-                    if(minute<10){
+                    if (minute < 10) {
 
                         ora_selezionata.setText(hourOfDay + ":0" + minute);
 
-                    }
-
-                    else{
+                    } else {
 
                         ora_selezionata.setText(hourOfDay + ":" + minute);
 
@@ -242,14 +205,8 @@ public class NotificationsFragment extends Fragment{
 
                 }
 
-
-
-
-
                 String selectedTime = (String) ora_selezionata.getText();
                 DBRef.child("Notifiche").child("Orario").setValue(selectedTime);
-
-
             }
 
         };
@@ -264,32 +221,8 @@ public class NotificationsFragment extends Fragment{
                 DBRef.child("Notifiche").child("Day_before").setValue(dataDay);
                 Snackbar.make(getView(), "Modifiche salvate correttamente!", Snackbar.LENGTH_SHORT).show();
 
-                // Starts the function below
-                //addNotification();
-
-
             }
         });
-
-
-
-
-        /*
-        day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });<
-*/
 
         disable.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,7 +240,6 @@ public class NotificationsFragment extends Fragment{
         return root;
 
     }
-
 
 
 }

@@ -24,30 +24,25 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
     private static int mPosition;
     private static boolean mResponse;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
 
         void onItemClick(int position);
+
         void onDeleteClick(int position);
+
         void onConsumatoClick(int position);
 
     }
 
-    public void  setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
 
 
-        mListener=listener;
-
-    }
-
-    public static void disableConsumato(boolean response){
-
-      // mPosition=position;
-       mResponse=response;
+        mListener = listener;
 
     }
 
 
-    public static class viewHolder extends RecyclerView.ViewHolder{
+    public static class viewHolder extends RecyclerView.ViewHolder {
 
         public ImageView mDelete;
         public ImageView mConsumato;
@@ -59,24 +54,24 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
 
         public viewHolder(@NonNull View itemView, final OnItemClickListener listener, final boolean mResponse) {
             super(itemView);
-            mDelete=itemView.findViewById(R.id.remove);
-            mConsumato=itemView.findViewById(R.id.imageConsumato);
-            mTextView1=itemView.findViewById(R.id.line1);
-            mTextView2=itemView.findViewById(R.id.line2);
-            labelConsumato=itemView.findViewById(R.id.label_consumato);
-            labelConsumo=itemView.findViewById(R.id.label_consumo);
-            g=itemView.findViewById(R.id.guideline72);
+            mDelete = itemView.findViewById(R.id.remove);
+            mConsumato = itemView.findViewById(R.id.imageConsumato);
+            mTextView1 = itemView.findViewById(R.id.line1);
+            mTextView2 = itemView.findViewById(R.id.line2);
+            labelConsumato = itemView.findViewById(R.id.label_consumato);
+            labelConsumo = itemView.findViewById(R.id.label_consumo);
+            g = itemView.findViewById(R.id.guideline72);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    if(listener!=null){
+                    if (listener != null) {
 
                         int position = getAdapterPosition();
 
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
 
                             listener.onItemClick(position);
 
@@ -93,11 +88,11 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
                 @Override
                 public void onClick(View v) {
 
-                    if(listener!=null){
+                    if (listener != null) {
 
                         int position = getAdapterPosition();
 
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
 
                             listener.onDeleteClick(position);
                         }
@@ -111,11 +106,11 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
                 @Override
                 public void onClick(View v) {
 
-                    if(listener!=null){
+                    if (listener != null) {
 
                         int position = getAdapterPosition();
 
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
 
                             listener.onConsumatoClick(position);
 
@@ -129,35 +124,35 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.viewHold
 
     }
 
-    public ExampleAdapter(ArrayList<item> exampleList){
+    public ExampleAdapter(ArrayList<item> exampleList) {
 
-        mExampleList=exampleList;
+        mExampleList = exampleList;
 
 
     }
 
     @Override
     public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent,false);
-        viewHolder evh  = new viewHolder(v, mListener, mResponse);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
+        viewHolder evh = new viewHolder(v, mListener, mResponse);
         return evh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
-    item currentItem = mExampleList.get(position);
+        item currentItem = mExampleList.get(position);
 
-    holder.mConsumato.setImageResource(currentItem.getmImageConsumato());
-    holder.mTextView1.setText(currentItem.getText1());
-    holder.mTextView2.setText(currentItem.getText2());
-    holder.labelConsumo.setText(currentItem.getText4());
-    holder.labelConsumato.setText(currentItem.getText3());
+        holder.mConsumato.setImageResource(currentItem.getmImageConsumato());
+        holder.mTextView1.setText(currentItem.getText1());
+        holder.mTextView2.setText(currentItem.getText2());
+        holder.labelConsumo.setText(currentItem.getText4());
+        holder.labelConsumato.setText(currentItem.getText3());
 
-    float x=0.99f;
-    if(currentItem.getPerc() > x) {
-        holder.g.setGuidelinePercent(currentItem.getPerc());
-    }
+        float x = 0.99f;
+        if (currentItem.getPerc() > x) {
+            holder.g.setGuidelinePercent(currentItem.getPerc());
+        }
 
     }
 

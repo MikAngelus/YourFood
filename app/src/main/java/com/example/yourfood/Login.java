@@ -49,50 +49,13 @@ public class Login extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_login);
 
-
-        //REGISTRAZIONE MANUALE SALVATAGGIO DB
-
-/*  final EditText email= (EditText) findViewById(R.id.editTextEmail) ;
-        final EditText password= (EditText) findViewById(R.id.editTextPassword) ;
-        Button register=(Button) findViewById(R.id.register);
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String email_user = email.getText().toString();
-                String pass_user = password.getText().toString();
-                FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
-                //String strMCodiceUID = FirebaseAuth.getInstance().getUid();
-                DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti");
-                /*DBRef.child("user").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                DBRef = dbFireBase.getReference("DB_Utenti/" + email_user);
-                DBRef.child("Email").setValue(email_user);
-                DBRef.child("Password").setValue(pass_user);
-
-
-
-            }
-        });
-*/
-
-        Button btn_google = (Button)findViewById(R.id.login_google);
+        Button btn_google = (Button) findViewById(R.id.login_google);
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null)
-                {
+                if (firebaseAuth.getCurrentUser() != null) {
                     Intent inteLCambioActiviy = new Intent(Login.this, MainActivity.class);
                     startActivity(inteLCambioActiviy);
                     ActivityCompat.finishAffinity(Login.this);
@@ -100,7 +63,8 @@ public class Login extends AppCompatActivity {
                 }
             }
 
-        };mAuth.addAuthStateListener(mAuthListener);
+        };
+        mAuth.addAuthStateListener(mAuthListener);
 
         btn_google.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +89,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
     }
 
@@ -166,7 +130,7 @@ public class Login extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Object obj = dataSnapshot.child("Prodotti").child("index").getValue();
 
-                                    if(obj == null){
+                                    if (obj == null) {
 
                                         String strMNome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                                         String strMemail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -186,7 +150,8 @@ public class Login extends AppCompatActivity {
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                 }
-                            };DBRef.addListenerForSingleValueEvent(eventListener);
+                            };
+                            DBRef.addListenerForSingleValueEvent(eventListener);
 
 
                         } else {
@@ -213,10 +178,8 @@ public class Login extends AppCompatActivity {
                         // Log and toast
                         String msg = getString(R.string.msg_token_fmt, token);
                         Log.d(TAG, msg);
-                       // Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
-
 
 
     }

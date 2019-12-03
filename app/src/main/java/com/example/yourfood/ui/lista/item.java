@@ -10,7 +10,6 @@ public class item {
 
     public item(String text1, String text2, String text3, int ImageConsumato){
 
-       // mImageResource=imageResource;
         mText1=text1;
         mText2=text2;
         mImageConsumato=ImageConsumato;
@@ -20,15 +19,12 @@ public class item {
 
     public item(String text1, String text2){
 
-        // mImageResource=imageResource;
         mText1=text1;
         mText2=text2;
 
     }
 
     public item(String text1, String text2, String text3, float perc, String text4){
-
-        // mImageResource=imageResource;
         mText1=text1;
         mText2=text2;
         mText3=text3;
@@ -72,7 +68,5 @@ public class item {
         mImageConsumato = image;
 
     }
-
-
 
 }

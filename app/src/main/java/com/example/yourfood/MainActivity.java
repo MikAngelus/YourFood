@@ -53,13 +53,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
 
         final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
         final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID);
-        //mAuth.removeAuthStateListener(mAuthListener);
-
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -89,39 +86,10 @@ public class MainActivity extends AppCompatActivity {
         DBRef.addListenerForSingleValueEvent(eventListener);
 
 
-
-
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create channel to show notifications.
-            String channelId  = getString(R.string.default_notification_channel_id);
-            String channelName = getString(R.string.default_notification_channel_name);
-            NotificationManager notificationManager =
-                    getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
-                    channelName, NotificationManager.IMPORTANCE_LOW));
-        }
-
-        // If a notification message is tapped, any data accompanying the notification
-        // message is available in the intent extras. In this sample the launcher
-        // intent is fired when the notification is tapped, so any accompanying data would
-        // be handled here. If you want a different intent fired, set the click_action
-        // field of the notification message to the desired intent. The launcher intent
-        // is used when no click_action is specified.
-        //
-        // Handle possible data accompanying notification message.
-        // [START handle_data_extras]
-        if (getIntent().getExtras() != null) {
-            for (String key : getIntent().getExtras().keySet()) {
-                Object value = getIntent().getExtras().get(key);
-               // Log.d(TAG, "Key: " + key + " Value: " + value);
-            }
-        }*/
-        // [END handle_data_extras]
-
         final Date ora_notify = new Date();
 
 
-        final ValueEventListener messageListener = new ValueEventListener()  {
+        final ValueEventListener messageListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -151,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -172,14 +141,12 @@ public class MainActivity extends AppCompatActivity {
 
     private class MyTask extends TimerTask {
 
-        public void run(){
-
+        public void run() {
 
 
             final int[] read_notifiche = new int[1];
 
             ValueEventListener messageListener = new ValueEventListener() {
-
 
 
                 @Override
@@ -212,14 +179,12 @@ public class MainActivity extends AppCompatActivity {
                             _day = _day * 10;
 
                             read_notifiche[0] = Integer.parseInt(notifiche);
-                            //Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
 
                             if (read_notifiche[0] == 1) {
 
 
                                 String index = dataSnapshot.child("Prodotti").child("index").getValue().toString();
 
-                                //Toast.makeText(getActivity(), index, Toast.LENGTH_SHORT).show();
 
                                 final Integer intIndex = parseInt(index);
 
@@ -249,10 +214,8 @@ public class MainActivity extends AppCompatActivity {
                                     if (check) {
 
                                         real_index++;
-                                        //System.out.println(y);
-                                        String nome = dataSnapshot.child("Prodotti").child(nodo).child("Nome").getValue().toString();
 
-                                       // Toast.makeText(getApplicationContext(), nome, Toast.LENGTH_SHORT).show();
+                                        String nome = dataSnapshot.child("Prodotti").child(nodo).child("Nome").getValue().toString();
                                         String scadenza = dataSnapshot.child("Prodotti").child(nodo).child("Data_scadenza").getValue().toString();
                                         String acquisto = dataSnapshot.child("Prodotti").child(nodo).child("Data_acquisto").getValue().toString();
                                         String costo = dataSnapshot.child("Prodotti").child(nodo).child("Costo").getValue().toString();
@@ -269,7 +232,6 @@ public class MainActivity extends AppCompatActivity {
                                         lista_dataScadenza[y] = scadenza;
 
                                         final Date c = Calendar.getInstance().getTime();
-                                        //System.out.println("Current time => " + c);
                                         final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                         final String currentDate = df.format(c);
 
@@ -277,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                                         String scad = lista_dataScadenza[y];
                                         System.out.println(scad);
 
-                                        if (scad != null && consumo==0 && scadere==0) {
+                                        if (scad != null && consumo == 0 && scadere == 0) {
 
 
                                             try {
@@ -286,10 +248,7 @@ public class MainActivity extends AppCompatActivity {
                                                 Date date2 = myFormat.parse(currentDate);
 
                                                 long diff = date1.getTime() - date2.getTime();
-                                                //long diff=0;
                                                 diff = diff / 10000000;
-
-                                                //Toast.makeText(getApplicationContext(), "" + diff, Toast.LENGTH_SHORT).show();
 
                                                 if (diff < _day) {
 
@@ -297,9 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                 }
 
-                                                //System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
                                             } catch (ParseException e) {
-                                                //data_scadenza.setText(null);
                                                 e.printStackTrace();
                                             }
 
@@ -323,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -342,17 +300,17 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this, "notify_001");
         Intent ii = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, ii, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText("Consumalo entro il "+ scadenza +" per evitare sprechi!");
-        bigText.setBigContentTitle("Il prodotto "+ nome +" sta per scadere!");
+        bigText.bigText("Consumalo entro il " + scadenza + " per evitare sprechi!");
+        bigText.setBigContentTitle("Il prodotto " + nome + " sta per scadere!");
         bigText.setSummaryText("in scadenza");
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
-        mBuilder.setContentTitle("Il prodotto "+ nome +" sta per scadere!");
-        mBuilder.setContentText("Consumalo entro il "+ scadenza +" per evitare sprechi!");
+        mBuilder.setContentTitle("Il prodotto " + nome + " sta per scadere!");
+        mBuilder.setContentText("Consumalo entro il " + scadenza + " per evitare sprechi!");
         mBuilder.setPriority(Notification.PRIORITY_MAX);
         mBuilder.setStyle(bigText);
 
@@ -360,8 +318,7 @@ public class MainActivity extends AppCompatActivity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         // === Removed some obsoletes
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "Your_channel_id";
             NotificationChannel channel = new NotificationChannel(
                     channelId,
@@ -376,8 +333,6 @@ public class MainActivity extends AppCompatActivity {
         mNotificationManager.notify(m, mBuilder.build());
 
     }
-
-
 
 
 }
