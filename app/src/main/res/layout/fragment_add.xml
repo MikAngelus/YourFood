@@ -293,6 +293,8 @@
        android:layout_marginTop="8dp"
        android:layout_marginEnd="8dp"
        android:entries="@array/pasto"
+       android:popupBackground="@color/colorGrey"
+       android:background="@color/colorGrey"
        android:spinnerMode="dropdown"
        app:layout_constraintEnd_toStartOf="@+id/guideline49"
        app:layout_constraintStart_toStartOf="@+id/guideline12"
@@ -303,7 +305,9 @@
        android:layout_width="0dp"
        android:layout_height="31dp"
        android:layout_marginTop="8dp"
+       android:background="@color/colorGrey"
        android:entries="@array/categoria"
+       android:popupBackground="@color/colorGrey"
        android:spinnerMode="dropdown"
        app:layout_constraintEnd_toStartOf="@+id/guideline13"
        app:layout_constraintHorizontal_bias="0.0"
@@ -381,5 +385,24 @@
        app:layout_constraintEnd_toStartOf="@+id/guideline25"
        app:layout_constraintStart_toStartOf="@+id/guideline12"
        app:layout_constraintTop_toTopOf="@+id/guideline50" />
+
+   <ImageView
+       android:id="@+id/imageView10"
+       android:layout_width="wrap_content"
+       android:layout_height="0dp"
+       app:layout_constraintBottom_toBottomOf="@+id/spinnerPasto"
+       app:layout_constraintEnd_toEndOf="@+id/spinnerPasto"
+       app:layout_constraintTop_toTopOf="@+id/spinnerPasto"
+       app:srcCompat="@drawable/ic_keyboard_arrow_down_24px" />
+
+
+   <ImageView
+       android:id="@+id/imageView11"
+       android:layout_width="wrap_content"
+       android:layout_height="0dp"
+       app:layout_constraintBottom_toBottomOf="@+id/spinnerCategoria"
+       app:layout_constraintEnd_toEndOf="@+id/spinnerCategoria"
+       app:layout_constraintTop_toTopOf="@+id/spinnerCategoria"
+       app:srcCompat="@drawable/ic_keyboard_arrow_down_24px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

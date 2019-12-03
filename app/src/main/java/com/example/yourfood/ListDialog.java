@@ -22,16 +22,54 @@ public class ListDialog extends AppCompatDialogFragment implements DialogInterfa
     public String costo;
     public String categoria;
     public String consumato;
-    //Todo: Mostrare il valore esatto dello spinner categoria e pasto
 
     public String pasto;
     public String quantita;
     public String count;
     public String posizione;
 
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        switch(categoria) {
+            case "0":
+                categoria="Pane/Pasta";
+                break;
+
+            case "1":
+                categoria="Carne";
+                break;
+
+            case "2":
+            categoria="Pesce";
+                break;
+
+            case "3":
+                categoria="Vegano/BIO";
+                break;
+        }
+
+        switch(pasto) {
+            case "0":
+                pasto="Colazione";
+                break;
+
+            case "1":
+                pasto="Merenda";
+                break;
+
+            case "2":
+                pasto="Pranzo";
+                break;
+
+            case "3":
+                pasto="Cena";
+                break;
+        }
+
 
         builder.setTitle(nome_prodotto);
         builder.setMessage("Scadenza: " + data_scadenza +

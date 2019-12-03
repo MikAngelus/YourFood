@@ -165,17 +165,19 @@ public class Login extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Object obj = dataSnapshot.child("Prodotti").child("index").getValue();
+
                                     if(obj == null){
-                                        DBRef.child("Notifiche").child("Attivo").setValue(0);
-                                        DBRef.child("Notifiche").child("Orario").setValue("13:00");
-                                        DBRef.child("Notifiche").child("Day_before").setValue("3");
-                                        DBRef.child("Prodotti").child("index").setValue(0);
+
                                         String strMNome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                                         String strMemail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                                         String strMnumero = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
                                         DBRef.child("Nome").setValue(strMNome);
                                         DBRef.child("Email").setValue(strMemail);
                                         DBRef.child("Telefono").setValue(strMnumero);
+                                        DBRef.child("Notifiche").child("Attivo").setValue(0);
+                                        DBRef.child("Notifiche").child("Orario").setValue("13:00");
+                                        DBRef.child("Notifiche").child("Day_before").setValue("3");
+                                        DBRef.child("Prodotti").child("index").setValue(0);
                                         //DBRef.child(strMCodiceUID).setValue(0);
                                     }
                                 }
@@ -208,11 +210,10 @@ public class Login extends AppCompatActivity {
 
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-
                         // Log and toast
                         String msg = getString(R.string.msg_token_fmt, token);
                         Log.d(TAG, msg);
-                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
 

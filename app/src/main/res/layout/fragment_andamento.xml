@@ -145,6 +145,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/anno"
+        android:popupBackground="@color/colorGrey"
+        android:background="@color/colorGrey"
         android:spinnerMode="dropdown"
         style="@style/Widget.AppCompat.DropDownItem.Spinner"
         app:layout_constraintBottom_toTopOf="@+id/guideline21"
@@ -152,6 +154,15 @@
         app:layout_constraintStart_toStartOf="@+id/guideline65"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerAnno"
+        app:layout_constraintEnd_toStartOf="@+id/guideline60"
+        app:layout_constraintTop_toTopOf="@+id/spinnerAnno"
+        app:srcCompat="@drawable/ic_keyboard_arrow_down_24px" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

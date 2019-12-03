@@ -9,10 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,22 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button sendNotify = findViewById(R.id.notify);
-
-        sendNotify.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                           //   addNotification();
-                                          }
-                                      }
-        );
-
-
-
-
-
-        final Object[] obj = new Object[1];
-
 
         FirebaseDatabase dbFireBase = FirebaseDatabase.getInstance();
 
@@ -85,17 +66,17 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object obj = dataSnapshot.child("Prodotti").child("index").getValue();
                 if (obj == null) {
-                    DBRef.child("Prodotti").child("index").setValue(0);
+
                     String strMNome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                     String strMemail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                     String strMnumero = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
                     DBRef.child("Nome").setValue(strMNome);
                     DBRef.child("Email").setValue(strMemail);
                     DBRef.child("Telefono").setValue(strMnumero);
-                    DBRef.child("Notifiche").setValue(0);
-                    DBRef.child("Notifiche").child("Orario").setValue("13:00");
                     DBRef.child("Notifiche").child("Attivo").setValue(0);
+                    DBRef.child("Notifiche").child("Orario").setValue("13:00");
                     DBRef.child("Notifiche").child("Day_before").setValue("3");
+                    DBRef.child("Prodotti").child("index").setValue(0);
 
                 }
             }
@@ -143,30 +124,33 @@ public class MainActivity extends AppCompatActivity {
         final ValueEventListener messageListener = new ValueEventListener()  {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String orario = dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
+
+                boolean check = dataSnapshot.child("Notifiche").child("Orario").exists();
 
 
-                String[] separated = orario.split(":");
-                String hour = separated[0];
-                String minute = separated[1];
-
-                int int_hour=Integer.parseInt(hour);
-                int int_minute=Integer.parseInt(minute);
-
-                Calendar rightNow = Calendar.getInstance();
-                int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
-                int currentMinute = rightNow.get(Calendar.MINUTE);
+                if (check) {
+                    String orario = dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
 
 
+                    String[] separated = orario.split(":");
+                    String hour = separated[0];
+                    String minute = separated[1];
 
-                ora_notify.setHours(currentHour);
-                ora_notify.setMinutes(currentMinute);
-                ora_notify.setSeconds(01);
+                    int int_hour = Integer.parseInt(hour);
+                    int int_minute = Integer.parseInt(minute);
+
+                    Calendar rightNow = Calendar.getInstance();
+                    int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
+                    int currentMinute = rightNow.get(Calendar.MINUTE);
 
 
+                    ora_notify.setHours(currentHour);
+                    ora_notify.setMinutes(currentMinute);
+                    ora_notify.setSeconds(01);
 
+
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -200,129 +184,134 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    String orario = dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
-
-                    String[] separated = orario.split(":");
-                    String hour = separated[0];
-                    String minute = separated[1];
-
-                    int int_hour = Integer.parseInt(hour);
-                    int int_minute = Integer.parseInt(minute);
-
-                    Calendar rightNow = Calendar.getInstance();
-                    int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
-                    int currentMinute = rightNow.get(Calendar.MINUTE);
+                    boolean check_orario = dataSnapshot.child("Notifiche").child("Orario").exists();
 
 
+                    if (check_orario) {
+                        String orario = dataSnapshot.child("Notifiche").child("Orario").getValue().toString();
 
-                    if (int_hour == currentHour && int_minute == currentMinute) {
+                        String[] separated = orario.split(":");
+                        String hour = separated[0];
+                        String minute = separated[1];
 
+                        int int_hour = Integer.parseInt(hour);
+                        int int_minute = Integer.parseInt(minute);
 
-                        String notifiche = dataSnapshot.child("Notifiche").child("Attivo").getValue().toString();
-                        String read_day = dataSnapshot.child("Notifiche").child("Day_before").getValue().toString();
-                        int _day = Integer.parseInt(read_day);
-
-                        _day = _day * 10;
-
-                        read_notifiche[0] = Integer.parseInt(notifiche);
-                        //Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
-
-                        if (read_notifiche[0] == 1) {
-
-
-                            String index = dataSnapshot.child("Prodotti").child("index").getValue().toString();
-
-                            //Toast.makeText(getActivity(), index, Toast.LENGTH_SHORT).show();
-
-                            final Integer intIndex = parseInt(index);
-
-                            final String[] lista_nome = new String[intIndex];
-                            final String[] lista_dataScadenza = new String[intIndex];
-                            final String[] lista_dataAcquisto = new String[intIndex];
-                            final String[] lista_pasto = new String[intIndex];
-                            final String[] lista_costo = new String[intIndex];
-                            final String[] lista_categoria = new String[intIndex];
-                            final String[] lista_quantita = new String[intIndex];
-                            final String[] lista_nodo = new String[intIndex];
-                            final String[] lista_consumato = new String[intIndex];
-                            int real_index = 0;
-                            int y = 0;
-
-                            int consumo = 0;
-
-                            for (int i = 0; i < intIndex; i++) {
-
-                                //String count= i.toString();
-                                final String count = Integer.toString(i);
-                                String nodo = "Prodotto_" + i;
-                                // String nome = dataSnapshot.child("Prodotto_" + count).child("Nome").getValue().toString();
-                                boolean check = dataSnapshot.child("Prodotti").child(nodo).exists();
+                        Calendar rightNow = Calendar.getInstance();
+                        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = rightNow.get(Calendar.MINUTE);
 
 
-                                if (check) {
-
-                                    real_index++;
-                                    //System.out.println(y);
-                                    String nome = dataSnapshot.child("Prodotti").child(nodo).child("Nome").getValue().toString();
-
-                                    Toast.makeText(getApplicationContext(), nome, Toast.LENGTH_SHORT).show();
-                                    String scadenza = dataSnapshot.child("Prodotti").child(nodo).child("Data_scadenza").getValue().toString();
-                                    String acquisto = dataSnapshot.child("Prodotti").child(nodo).child("Data_acquisto").getValue().toString();
-                                    String costo = dataSnapshot.child("Prodotti").child(nodo).child("Costo").getValue().toString();
-                                    String pasto = dataSnapshot.child("Prodotti").child(nodo).child("Pasto").getValue().toString();
-                                    String categoria = dataSnapshot.child("Prodotti").child(nodo).child("Categoria").getValue().toString();
-                                    String quantita = dataSnapshot.child("Prodotti").child(nodo).child("Quantita").getValue().toString();
-                                    String consumato = dataSnapshot.child("Prodotti").child(nodo).child("Consumato").getValue().toString();
-                                    String scaduto = dataSnapshot.child("Prodotti").child(nodo).child("Scaduto").getValue().toString();
-
-                                    consumo = parseInt(consumato);
-                                    int scadere = parseInt(scaduto);
-                                    System.out.println(nome);
-                                    lista_nome[y] = nome;
-                                    lista_dataScadenza[y] = scadenza;
-
-                                    final Date c = Calendar.getInstance().getTime();
-                                    //System.out.println("Current time => " + c);
-                                    final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                                    final String currentDate = df.format(c);
-
-                                    SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                    String scad = lista_dataScadenza[y];
-                                    System.out.println(scad);
-
-                                    if (scad != null) {
+                        if (int_hour == currentHour && int_minute == currentMinute) {
 
 
-                                        try {
+                            String notifiche = dataSnapshot.child("Notifiche").child("Attivo").getValue().toString();
+                            String read_day = dataSnapshot.child("Notifiche").child("Day_before").getValue().toString();
+                            int _day = Integer.parseInt(read_day);
 
-                                            Date date1 = myFormat.parse(scad);
-                                            Date date2 = myFormat.parse(currentDate);
+                            _day = _day * 10;
 
-                                            long diff = date1.getTime() - date2.getTime();
-                                            //long diff=0;
-                                            diff = diff / 10000000;
+                            read_notifiche[0] = Integer.parseInt(notifiche);
+                            //Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
 
-                                            Toast.makeText(getApplicationContext(), "" + diff, Toast.LENGTH_SHORT).show();
+                            if (read_notifiche[0] == 1) {
 
-                                            if (diff < _day) {
 
-                                                addNotification(lista_nome[y], scad);
+                                String index = dataSnapshot.child("Prodotti").child("index").getValue().toString();
 
+                                //Toast.makeText(getActivity(), index, Toast.LENGTH_SHORT).show();
+
+                                final Integer intIndex = parseInt(index);
+
+                                final String[] lista_nome = new String[intIndex];
+                                final String[] lista_dataScadenza = new String[intIndex];
+                                final String[] lista_dataAcquisto = new String[intIndex];
+                                final String[] lista_pasto = new String[intIndex];
+                                final String[] lista_costo = new String[intIndex];
+                                final String[] lista_categoria = new String[intIndex];
+                                final String[] lista_quantita = new String[intIndex];
+                                final String[] lista_nodo = new String[intIndex];
+                                final String[] lista_consumato = new String[intIndex];
+                                int real_index = 0;
+                                int y = 0;
+
+                                int consumo = 0;
+
+                                for (int i = 0; i < intIndex; i++) {
+
+                                    //String count= i.toString();
+                                    final String count = Integer.toString(i);
+                                    String nodo = "Prodotto_" + i;
+                                    // String nome = dataSnapshot.child("Prodotto_" + count).child("Nome").getValue().toString();
+                                    boolean check = dataSnapshot.child("Prodotti").child(nodo).exists();
+
+
+                                    if (check) {
+
+                                        real_index++;
+                                        //System.out.println(y);
+                                        String nome = dataSnapshot.child("Prodotti").child(nodo).child("Nome").getValue().toString();
+
+                                       // Toast.makeText(getApplicationContext(), nome, Toast.LENGTH_SHORT).show();
+                                        String scadenza = dataSnapshot.child("Prodotti").child(nodo).child("Data_scadenza").getValue().toString();
+                                        String acquisto = dataSnapshot.child("Prodotti").child(nodo).child("Data_acquisto").getValue().toString();
+                                        String costo = dataSnapshot.child("Prodotti").child(nodo).child("Costo").getValue().toString();
+                                        String pasto = dataSnapshot.child("Prodotti").child(nodo).child("Pasto").getValue().toString();
+                                        String categoria = dataSnapshot.child("Prodotti").child(nodo).child("Categoria").getValue().toString();
+                                        String quantita = dataSnapshot.child("Prodotti").child(nodo).child("Quantita").getValue().toString();
+                                        String consumato = dataSnapshot.child("Prodotti").child(nodo).child("Consumato").getValue().toString();
+                                        String scaduto = dataSnapshot.child("Prodotti").child(nodo).child("Scaduto").getValue().toString();
+
+                                        consumo = parseInt(consumato);
+                                        int scadere = parseInt(scaduto);
+                                        System.out.println(nome);
+                                        lista_nome[y] = nome;
+                                        lista_dataScadenza[y] = scadenza;
+
+                                        final Date c = Calendar.getInstance().getTime();
+                                        //System.out.println("Current time => " + c);
+                                        final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                        final String currentDate = df.format(c);
+
+                                        SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                        String scad = lista_dataScadenza[y];
+                                        System.out.println(scad);
+
+                                        if (scad != null && consumo==0 && scadere==0) {
+
+
+                                            try {
+
+                                                Date date1 = myFormat.parse(scad);
+                                                Date date2 = myFormat.parse(currentDate);
+
+                                                long diff = date1.getTime() - date2.getTime();
+                                                //long diff=0;
+                                                diff = diff / 10000000;
+
+                                                //Toast.makeText(getApplicationContext(), "" + diff, Toast.LENGTH_SHORT).show();
+
+                                                if (diff < _day) {
+
+                                                    addNotification(lista_nome[y], scad);
+
+                                                }
+
+                                                //System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                                            } catch (ParseException e) {
+                                                //data_scadenza.setText(null);
+                                                e.printStackTrace();
                                             }
 
-                                            //System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-                                        } catch (ParseException e) {
-                                            //data_scadenza.setText(null);
-                                            e.printStackTrace();
                                         }
+
+                                        y++;
+
+
+                                    } else {
 
                                     }
 
-                                    y++;
-
-
-                                } else {
 
                                 }
 
@@ -331,12 +320,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                         }
-
-
                     }
+
                 }
-
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 

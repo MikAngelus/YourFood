@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -97,7 +97,7 @@ public class ListaFragment extends Fragment {
         colazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Colazione",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Colazione",Toast.LENGTH_SHORT).show();
              //   colazione.setBackgroundTintList(ColorStateList.valueOf(250));
 
 
@@ -128,7 +128,7 @@ public class ListaFragment extends Fragment {
         merenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Merenda",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "Merenda",Toast.LENGTH_SHORT).show();
 
                 if(scelta_pasto[0]==1){
 
@@ -160,7 +160,7 @@ public class ListaFragment extends Fragment {
         pranzo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Pranzo",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Pranzo",Toast.LENGTH_SHORT).show();
 
                 if(scelta_pasto[0]==2){
 
@@ -192,7 +192,7 @@ public class ListaFragment extends Fragment {
         cena.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Cena",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Cena",Toast.LENGTH_SHORT).show();
 
 
                 if(scelta_pasto[0]==3){
@@ -248,7 +248,7 @@ public class ListaFragment extends Fragment {
                                            @Override
                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                                //Toast.makeText(getActivity(), ""+tipo.getSelectedItemId() ,Toast.LENGTH_SHORT).show();
-                                               Toast.makeText(getActivity(), ""+currentDate ,Toast.LENGTH_SHORT).show();
+                                               //Toast.makeText(getActivity(), ""+currentDate ,Toast.LENGTH_SHORT).show();
                                                myArrayList.clear();
                                                list.clear();
                                                setLista(scelta_pasto, tipo, myArrayList, myArrayAdapter, myListView, list, mRecyclerView);
@@ -350,7 +350,7 @@ public class ListaFragment extends Fragment {
                                     if (scadere == 1 && tipo.getSelectedItemId() == 2) {
 
                                         if(consumo==0){
-                                        list.add(new item(nome, "Scadenza: " +scadenza, "Da consumare", R.drawable.ic_checked));
+                                        list.add(new item(nome, "Scadenza: " +scadenza, "Consuma!", R.drawable.ic_checked));
 
                                         }
                                         else if(consumo==1){
@@ -379,7 +379,7 @@ public class ListaFragment extends Fragment {
                                     }
 
                                     if (consumo < 1 && tipo.getSelectedItemId() == 0) {
-                                        list.add(new item(nome, "Scadenza: " + scadenza,"Da consumare", R.drawable.ic_checked));
+                                        list.add(new item(nome, "Scadenza: " + scadenza,"Consuma!", R.drawable.ic_checked));
 
 
                                         myArrayList.add(nome);
@@ -457,7 +457,7 @@ public class ListaFragment extends Fragment {
                                         final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
                                         final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/"+ lista_nodo[position]);
                                         DBRef.removeValue();
-                                        Toast.makeText(getActivity(), "Eliminato: " + lista_nome[position] , Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getActivity(), "Eliminato: " + lista_nome[position] , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -472,14 +472,21 @@ public class ListaFragment extends Fragment {
                                             final String strMCodiceUID = FirebaseAuth.getInstance().getUid();
                                             final DatabaseReference DBRef = dbFireBase.getReference("DB_Utenti/" + strMCodiceUID + "/Prodotti/" + lista_nodo[position]);
                                             DBRef.child("Consumato").setValue("1");
-                                            Toast.makeText(getActivity(), "Consumato: " + lista_nome[position], Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Consumato: " + lista_nome[position], Toast.LENGTH_SHORT).show();
                                         }
                                         else {
 
 
                                         }
 
+                                        Fragment someFragment = new ListaFragment();
+                                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                        transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                                        transaction.commit();
                                     }
+
+
                                 });
 
 
@@ -490,7 +497,7 @@ public class ListaFragment extends Fragment {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                                        Toast.makeText(getActivity(), lista_nome[i] + " " + lista_dataScadenza[i], Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getActivity(), lista_nome[i] + " " + lista_dataScadenza[i], Toast.LENGTH_SHORT).show();
                                         openDialog(lista_nome[i], lista_dataScadenza[i], lista_dataAcquisto[i], lista_costo[i], lista_pasto[i], lista_categoria[i], lista_quantita[i], lista_nodo[i], lista_consumato[i]);
 
                                     }

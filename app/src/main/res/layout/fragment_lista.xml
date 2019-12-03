@@ -119,6 +119,8 @@
         android:id="@+id/tipo_prodotto"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:popupBackground="@color/colorGrey"
+        android:background="@color/colorGrey"
         android:entries="@array/tipo_prodotto"
         app:layout_constraintBottom_toTopOf="@+id/guideline23"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
@@ -218,5 +220,15 @@
         android:text="Button"
         app:layout_constraintTop_toBottomOf="@+id/view7"
         tools:layout_editor_absoluteX="95dp" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline23"
+        app:layout_constraintEnd_toEndOf="@+id/tipo_prodotto"
+        app:layout_constraintStart_toStartOf="@+id/guideline37"
+        app:layout_constraintTop_toTopOf="@+id/guideline33"
+        app:srcCompat="@drawable/ic_keyboard_arrow_down_24px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

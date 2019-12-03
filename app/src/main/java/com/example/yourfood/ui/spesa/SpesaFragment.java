@@ -77,6 +77,7 @@ public class SpesaFragment extends Fragment {
         chips[10]=root.findViewById(R.id.chip_novembre);
         chips[11]=root.findViewById(R.id.chip_dicembre);
 
+
         final PieChart chart = root.findViewById(R.id.chart_spese);
 
         final Button andamento= root.findViewById(R.id.view_bar);
@@ -112,7 +113,7 @@ public class SpesaFragment extends Fragment {
         chips[mese].setChecked(true);
         chips[mese].setTextColor(Color.WHITE);
 
-        final String[] mese_selezionato = {"31/" + (mese + 1) + "/" + year + ""};
+        final String[] mese_selezionato = {"31/" + (mese) + "/" + year + ""};
         System.out.println(mese_selezionato[0]);
 
         final boolean[] clear = {false};
@@ -165,6 +166,7 @@ public class SpesaFragment extends Fragment {
             //chips[i].setEnabled(false);
         }
 
+        mese_selezionato[0] ="31/"+(scelta_mese[0]+1)+"/"+year+"";
         readDB(mese_selezionato[0], scelta_mese[0], year, root, totale, spesa_mensile, chips, chart, categoria);
 
 
@@ -278,9 +280,8 @@ public class SpesaFragment extends Fragment {
                             Date date2 = myFormat.parse(mese_selezionato);
                             String mese_precedente ="31/"+(scelta_mese)+"/"+year+"";
                             Date date3 = myFormat.parse(mese_precedente);
-                            long diff = date2.getTime() - date1.getTime();
 
-                            //System.out.println(date1+" "+date2+" "+date3);
+                           //System.out.println(date3);
 
                             if (date2.getTime() > date1.getTime() && date1.getTime() > date3.getTime()) {
 

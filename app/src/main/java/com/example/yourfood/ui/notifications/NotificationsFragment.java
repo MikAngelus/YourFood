@@ -16,13 +16,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.yourfood.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,7 +95,7 @@ public class NotificationsFragment extends Fragment{
                 ora_selezionata.setText(orario);
 
                 read_notifiche[0] = Integer.parseInt(notifiche);
-                Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "" + read_notifiche[0], Toast.LENGTH_SHORT).show();
 
                 if (read_notifiche[0] == 1) {
 
@@ -150,7 +150,7 @@ public class NotificationsFragment extends Fragment{
 
                 }
 
-                Toast.makeText(getActivity(), "" + attivo[0], Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "" + attivo[0], Toast.LENGTH_SHORT).show();
 
 
                 ValueEventListener messageListener = new ValueEventListener() {
@@ -262,7 +262,7 @@ public class NotificationsFragment extends Fragment{
                 idDay++;
                 final String dataDay = String.valueOf(idDay);
                 DBRef.child("Notifiche").child("Day_before").setValue(dataDay);
-
+                Snackbar.make(getView(), "Modifiche salvate correttamente!", Snackbar.LENGTH_SHORT).show();
 
                 // Starts the function below
                 //addNotification();

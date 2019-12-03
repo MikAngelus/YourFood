@@ -137,73 +137,76 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-                String index = dataSnapshot.child("Prodotti").child("index").getValue().toString();
-
-                final Integer intIndex = parseInt(index);
-                int y = 0;
-                float parziale = 0;
-
-                int count_presence = 0;
+                boolean check_prodotti = dataSnapshot.child("Prodotti").child("index").exists();
 
 
-                for (int i = 0; i < intIndex; i++) {
+                if (check_prodotti) {
+                    String index = dataSnapshot.child("Prodotti").child("index").getValue().toString();
+
+                    final Integer intIndex = parseInt(index);
+                    int y = 0;
+                    float parziale = 0;
+
+                    int count_presence = 0;
 
 
-                    //String count= i.toString();
-                    final String count = Integer.toString(i);
-                    String nodo = "Prodotto_" + i;
-                    // String nome = dataSnapshot.child("Prodotto_" + count).child("Nome").getValue().toString();
-                    boolean check = dataSnapshot.child("Prodotti").child(nodo).exists();
+                    for (int i = 0; i < intIndex; i++) {
 
 
-                    if (check) {
+                        //String count= i.toString();
+                        final String count = Integer.toString(i);
+                        String nodo = "Prodotto_" + i;
+                        // String nome = dataSnapshot.child("Prodotto_" + count).child("Nome").getValue().toString();
+                        boolean check = dataSnapshot.child("Prodotti").child(nodo).exists();
 
 
-                        System.out.println(y);
-
-                        // String nome = dataSnapshot.child(nodo).child("Nome").getValue().toString();
-                        //String scadenza = dataSnapshot.child(nodo).child("Data_scadenza").getValue().toString();
-                        // String acquisto = dataSnapshot.child(nodo).child("Data_acquisto").getValue().toString();
-                        String costo = dataSnapshot.child("Prodotti").child(nodo).child("Costo").getValue().toString();
-                        String consumato = dataSnapshot.child("Prodotti").child(nodo).child("Consumato").getValue().toString();
-                        // String pasto = dataSnapshot.child(nodo).child("Pasto").getValue().toString();
-                        //String categoria = dataSnapshot.child(nodo).child("Categoria").getValue().toString();
-                        String quantita = dataSnapshot.child("Prodotti").child(nodo).child("Quantita").getValue().toString();
-                        String scaduto = dataSnapshot.child("Prodotti").child(nodo).child("Scaduto").getValue().toString();
+                        if (check) {
 
 
-                        int read_scaduto = Integer.parseInt(scaduto);
-                        int read_consumato = Integer.parseInt(consumato);
-                        float x = Float.parseFloat(costo);
-                        float z = Float.parseFloat(quantita);
+                            System.out.println(y);
+
+                            // String nome = dataSnapshot.child(nodo).child("Nome").getValue().toString();
+                            //String scadenza = dataSnapshot.child(nodo).child("Data_scadenza").getValue().toString();
+                            // String acquisto = dataSnapshot.child(nodo).child("Data_acquisto").getValue().toString();
+                            String costo = dataSnapshot.child("Prodotti").child(nodo).child("Costo").getValue().toString();
+                            String consumato = dataSnapshot.child("Prodotti").child(nodo).child("Consumato").getValue().toString();
+                            // String pasto = dataSnapshot.child(nodo).child("Pasto").getValue().toString();
+                            //String categoria = dataSnapshot.child(nodo).child("Categoria").getValue().toString();
+                            String quantita = dataSnapshot.child("Prodotti").child(nodo).child("Quantita").getValue().toString();
+                            String scaduto = dataSnapshot.child("Prodotti").child(nodo).child("Scaduto").getValue().toString();
 
 
-                        if (read_scaduto == 1 && read_consumato == 1) {
+                            int read_scaduto = Integer.parseInt(scaduto);
+                            int read_consumato = Integer.parseInt(consumato);
+                            float x = Float.parseFloat(costo);
+                            float z = Float.parseFloat(quantita);
 
 
-                            prodotti_scaduti_consumati[0]++;
-
-                        } else if (read_scaduto == 1 && read_consumato == 0) {
-
-                            parziale = parziale + (x * z);
-                            prodotti_scaduti[0]++;
-
-                        } else if (read_consumato == 1) {
+                            if (read_scaduto == 1 && read_consumato == 1) {
 
 
-                            prodotti_consumati[0]++;
-                        } else {
+                                prodotti_scaduti_consumati[0]++;
 
-                            prodotti_non_consumati[0]++;
+                            } else if (read_scaduto == 1 && read_consumato == 0) {
 
-                        }
+                                parziale = parziale + (x * z);
+                                prodotti_scaduti[0]++;
 
-                        //System.out.println(parziale);
+                            } else if (read_consumato == 1) {
 
-                        //   SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        //String inputString1 = acquisto.getText().toString();
-                        //String inputString2 = mese_selezionato[0];
+
+                                prodotti_consumati[0]++;
+                            } else {
+
+                                prodotti_non_consumati[0]++;
+
+                            }
+
+                            //System.out.println(parziale);
+
+                            //   SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            //String inputString1 = acquisto.getText().toString();
+                            //String inputString2 = mese_selezionato[0];
 
 /*
 
@@ -297,7 +300,7 @@ public class HomeFragment extends Fragment {
                         lista_quantita[y] = quantita;
                         lista_nodo[y] = nodo;*/
 
-                        y++;
+                            y++;
 
 /*
                         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -310,12 +313,12 @@ public class HomeFragment extends Fragment {
                             }
                         });
 */
-                    } else {
+                        } else {
+
+                        }
+
 
                     }
-
-
-                }
 
 
 /*
@@ -341,83 +344,81 @@ public class HomeFragment extends Fragment {
 
                     }
 */
-                NumberFormat formatter = NumberFormat.getNumberInstance();
-                formatter.setMinimumFractionDigits(2);
-                formatter.setMaximumFractionDigits(2);
-                String output = formatter.format(parziale);
-                spreco_user.setText(output + "€");
+                    NumberFormat formatter = NumberFormat.getNumberInstance();
+                    formatter.setMinimumFractionDigits(2);
+                    formatter.setMaximumFractionDigits(2);
+                    String output = formatter.format(parziale);
+                    spreco_user.setText(output + "€");
 
-                label_prod_scaduti.setText("" + prodotti_scaduti[0]);
-                label_prod_consumati.setText("" + prodotti_consumati[0]);
-                label_prod_non_consumati.setText("" + prodotti_non_consumati[0]);
-                label_prod_scaduti_consumati.setText("" + prodotti_scaduti_consumati[0]);
-
-
-      int rainfall[] ={prodotti_consumati[0]+prodotti_scaduti_consumati[0],prodotti_scaduti[0], prodotti_non_consumati[0]};
-                String monthNames[] = {"Consumati","Scaduti","Non Consumati"};
-
-                List<PieEntry> pieEntries = new ArrayList<>();
-                int count=0;
-                for(int i=0; i<rainfall.length; i++){
+                    label_prod_scaduti.setText("" + prodotti_scaduti[0]);
+                    label_prod_consumati.setText("" + prodotti_consumati[0]);
+                    label_prod_non_consumati.setText("" + prodotti_non_consumati[0]);
+                    label_prod_scaduti_consumati.setText("" + prodotti_scaduti_consumati[0]);
 
 
-                    if(rainfall[i]!=0) {
-                        count++;
-                        pieEntries.add(new PieEntry(rainfall[i], monthNames[i]));
+                    int rainfall[] = {prodotti_consumati[0] + prodotti_scaduti_consumati[0], prodotti_scaduti[0], prodotti_non_consumati[0]};
+                    String monthNames[] = {"Consumati", "Scaduti", "Non Consumati"};
+
+                    List<PieEntry> pieEntries = new ArrayList<>();
+                    int count = 0;
+                    for (int i = 0; i < rainfall.length; i++) {
+
+
+                        if (rainfall[i] != 0) {
+                            count++;
+                            pieEntries.add(new PieEntry(rainfall[i], monthNames[i]));
+                        }
+
                     }
 
-                }
+                    PieDataSet dataSet = new PieDataSet(pieEntries, "Stato prodotti acquistati");
+                    //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
-                PieDataSet dataSet = new PieDataSet(pieEntries, "Stato prodotti acquistati");
-                //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                    dataSet.setSliceSpace(3f);
+                    dataSet.setSelectionShift(12f);
 
-                dataSet.setSliceSpace(3f);
-                dataSet.setSelectionShift(12f);
+                    dataSet.setValueTextSize(11f);
+                    dataSet.setValueTextColor(Color.WHITE);
 
-                dataSet.setValueTextSize(11f);
-                dataSet.setValueTextColor(Color.WHITE);
-
-                dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                PieData data = new PieData(dataSet);
+                    dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                    PieData data = new PieData(dataSet);
 
 
-                //GET THE CHART
-                PieChart chart = root.findViewById(R.id.chart1);
-                chart.setData(data);
-                dataSet.setValueFormatter(new PercentFormatter(chart));
+                    //GET THE CHART
+                    PieChart chart = root.findViewById(R.id.chart1);
+                    chart.setData(data);
+                    dataSet.setValueFormatter(new PercentFormatter(chart));
 
-                //data.setValueTypeface(tfLight);
-                chart.setRotationAngle(180f);
-                chart.getDescription().setEnabled(false);
-                chart.animateY(1500);
-                chart.setHoleRadius(50);
-                chart.getLegend().setEnabled(false);
-                chart.setCenterText("Stato prodotti acquistati");
-                chart.setCenterTextSize(20);
-                chart.setCenterTextColor(Color.DKGRAY);
+                    //data.setValueTypeface(tfLight);
+                    chart.setRotationAngle(180f);
+                    chart.getDescription().setEnabled(false);
+                    chart.animateY(1500);
+                    chart.setHoleRadius(50);
+                    chart.getLegend().setEnabled(false);
+                    chart.setCenterText("Stato prodotti acquistati");
+                    chart.setCenterTextSize(20);
+                    chart.setCenterTextColor(Color.DKGRAY);
 
-                dataSet.setValueTextSize(20);
-                chart.setEntryLabelColor(Color.BLACK);
-                chart.setEntryLabelTypeface(Typeface.DEFAULT);
-                chart.setEntryLabelTextSize(16);
-                chart.setUsePercentValues(true);
-                chart.invalidate();
+                    dataSet.setValueTextSize(20);
+                    chart.setEntryLabelColor(Color.BLACK);
+                    chart.setEntryLabelTypeface(Typeface.DEFAULT);
+                    chart.setEntryLabelTextSize(16);
+                    chart.setUsePercentValues(true);
+                    chart.invalidate();
 
 
-                if(count==0){
+                    if (count == 0) {
 
-                    chart.setVisibility(View.GONE);
-                   // categoria.setVisibility(View.GONE);
+                        chart.setVisibility(View.GONE);
+                        // categoria.setVisibility(View.GONE);
 
-                }
+                    } else {
 
-                else{
+                        chart.setVisibility(View.VISIBLE);
 
-                    chart.setVisibility(View.VISIBLE);
+                        // categoria.setVisibility(View.VISIBLE);
 
-                   // categoria.setVisibility(View.VISIBLE);
-
-                }
+                    }
 
 
 /*
@@ -470,8 +471,8 @@ public class HomeFragment extends Fragment {
                     rapporto.setText(output+"%");
                     */
 
+                }
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

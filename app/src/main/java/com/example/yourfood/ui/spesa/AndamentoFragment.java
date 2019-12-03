@@ -95,7 +95,7 @@ public class AndamentoFragment extends Fragment {
 
                         int read_mese= parseInt(mese[0]);
 
-                        for (int count_mese=0; count_mese<12; count_mese++){
+                        for (int count_mese=0; count_mese<13; count_mese++){
 
 
                             if(count_mese==read_mese){

@@ -543,6 +543,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
+        android:visibility="invisible"
         android:scrollbarAlwaysDrawVerticalTrack="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"

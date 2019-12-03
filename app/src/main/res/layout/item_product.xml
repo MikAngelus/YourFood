@@ -85,7 +85,7 @@
             android:id="@+id/label_consumato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Consumato"
+            android:text="Consuma"
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline73"

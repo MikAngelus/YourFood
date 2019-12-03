@@ -46,7 +46,11 @@ public class AddFragment extends Fragment {
 
    /* final Integer[] dataControll = {0};
     String data = null;*/
+   final Date c = Calendar.getInstance().getTime();
+    //System.out.println("Current time => " + c);
 
+    final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    final String currentDate = df.format(c);
 
 
 
@@ -102,7 +106,35 @@ public class AddFragment extends Fragment {
                 }
 
                 data_acquisto.setText(day + "/" + month + "/" + year);
+                Calendar rightNow = Calendar.getInstance();
+                int currentDay = rightNow.get(Calendar.DAY_OF_MONTH);
+                int currentMounth = rightNow.get(Calendar.MONTH);
+                int currentYear=rightNow.get(Calendar.YEAR);
 
+
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String inputString1 = data_acquisto.getText().toString();
+                String inputString2;
+
+                try {
+
+                    Date date1 = myFormat.parse(inputString1);
+                    Date date2 = myFormat.parse(currentDate);
+
+                    long diff = date1.getTime() - date2.getTime();
+                    //long diff=0;
+
+                    if (diff > 0) {
+
+                        data_acquisto.setText(null);
+                        Toast.makeText(getActivity(), "Non puoi viaggiare nel tempo!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } catch (ParseException e) {
+                    data_acquisto.setText(null);
+                    e.printStackTrace();
+                }
 
 
             }
@@ -346,7 +378,20 @@ public class AddFragment extends Fragment {
                         Snackbar.make(getView(), R.string.saved, Snackbar.LENGTH_SHORT)
                                 .show();
 
-                       // Toast.makeText(getActivity(), "Prodotto aggiunto alla lista!", Toast.LENGTH_SHORT).show();
+                        nome_prodotto.setText(null);
+                        data_acquisto.setText(null);
+                        data_scadenza.setText(null);
+                        num_quantita.setText(null);
+                        costo.setText(null);
+
+                        /*
+                        Fragment someFragment = new ListaFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.nav_host_fragment, someFragment ); // give your fragment container id in first parameter
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();
+                       // Toast.makeText(getActivity(), "Prodotto aggiunto alla lista!", Toast.LENGTH_SHORT).show();*/
+
                     } else {
 
                         Snackbar.make(getView(), "Inserisci una quantità o costo valida!", Snackbar.LENGTH_SHORT).show();
@@ -359,7 +404,12 @@ public class AddFragment extends Fragment {
                     Snackbar.make(getView(), "Attenzione: dati mancanti!", Snackbar.LENGTH_SHORT).show();
 
                 }
+
+
             }
+
+
+
         });
 
 
